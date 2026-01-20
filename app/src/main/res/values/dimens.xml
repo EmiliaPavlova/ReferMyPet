@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="splash_text">42sp</dimen>
+    <dimen name="border_padding">32dp</dimen>
+    <dimen name="max_input_width">400dp</dimen>
+
+    <dimen name="input_vertical_padding">12dp</dimen>
+    <dimen name="field_margin_bottom">8dp</dimen>
+    <dimen name="section_margin_bottom">12dp</dimen>
+    <dimen name="input_corner_radius">4dp</dimen>
+    <dimen name="input_stroke_width">1dp</dimen>
+</resources>

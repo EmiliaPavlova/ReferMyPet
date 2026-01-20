@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="8dp"
+    app:cardBackgroundColor="@android:color/white"
+    app:cardCornerRadius="12dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="12dp">
+
+        <EditText
+            android:id="@+id/et_pet_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/pet_name"
+            android:textColor="@color/brown" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/pet_type"
+            android:textSize="12sp"
+            android:textColor="@color/brown"
+            android:layout_marginTop="4dp"/>
+
+        <Spinner
+            android:id="@+id/spinner_pet_type"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:spinnerMode="dropdown" />
+
+        <EditText
+            android:id="@+id/et_pet_breed"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/breed"
+            android:textColor="@color/brown" />
+
+        <EditText
+            android:id="@+id/et_pet_birth_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/birth_date"
+            android:inputType="date"
+            android:textColor="@color/brown" />
+
+        <EditText
+            android:id="@+id/et_pet_chip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/chip_number"
+            android:textColor="@color/brown" />
+
+        <ImageButton
+            android:id="@+id/btn_remove_pet"
+            android:layout_width="32dp"
+            android:layout_height="32dp"
+            android:layout_gravity="end"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:src="@android:drawable/ic_menu_delete"
+            app:tint="@color/brown"
+            android:contentDescription="@string/delete" />
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

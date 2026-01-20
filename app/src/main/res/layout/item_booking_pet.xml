@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginVertical="6dp"
+    android:layout_marginHorizontal="10dp"
+    app:cardCornerRadius="12dp"
+    app:cardElevation="3dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="12dp"
+        android:background="@color/creamy"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:id="@+id/iv_pet_icon"
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:layout_marginEnd="15dp"
+            android:src="@drawable/ic_default_pet_placeholder"
+            android:scaleType="centerCrop"
+            app:tint="@color/pet_gold" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_pet_name_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Buddy (Dog)"
+                android:textSize="17sp"
+                android:textStyle="bold"
+                android:textColor="@color/brown" />
+
+            <TextView
+                android:id="@+id/tv_pet_breed"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Breed: Golden Retriever"
+                android:textSize="14sp"
+                android:textColor="@color/brown" />
+
+            <TextView
+                android:id="@+id/tv_pet_age"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Age: 3 years"
+                android:textSize="13sp"
+                android:textColor="@color/brown"
+                android:layout_marginTop="2dp" />
+
+            <TextView
+                android:id="@+id/tv_pet_chip"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Chip: ABC123DEF"
+                android:textSize="13sp"
+                android:textColor="@color/brown"
+                android:layout_marginTop="2dp" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginTop="6dp">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@android:drawable/btn_star_big_on"
+                    app:tint="@color/pet_gold" />
+
+                <TextView
+                    android:id="@+id/tv_pet_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="4.5"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:textColor="@color/pet_gold"
+                    android:layout_marginStart="4dp" />
+            </LinearLayout>
+        </LinearLayout>
+
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

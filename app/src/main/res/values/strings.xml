@@ -1,0 +1,106 @@
+<resources>
+    <string name="app_name">Refer My Pet</string>
+    <string name="home_title">Refer My Pet</string>
+    <string name="splash_screen_background">Splash screen background</string>
+    <string name="splash_screen_background_landscape">Splash screen background landscape</string>
+    <string name="please_login">Please login</string>
+    <string name="welcome">Welcome to Refer My Pet</string>
+    <string name="email">Email</string>
+    <string name="email_req">Email *</string>
+    <string name="password">Password</string>
+    <string name="password_req">Password *</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="submit">Submit</string>
+    <string name="refer_my_pet_logo">Refer My Pet Logo</string>
+    <string name="no_account">"No account? "</string>
+    <string name="create_account">Create Account</string>
+    <string name="register">Register.</string>
+    <string name="register_as">Register as:</string>
+
+    <string name="hotel_name">Hotel Name *</string>
+    <string name="chain_name">Chain Name</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="postal_code">Postal Code</string>
+    <string name="street_address">Street Address</string>
+    <string name="primary_phone">Primary Phone</string>
+    <string name="secondary_phone">Secondary Phone</string>
+    <string name="description">Description</string>
+    <string name="first_name">First Name *</string>
+    <string name="last_name">Last Name *</string>
+    <string name="birth_date">Birth Date *</string>
+    <string name="phone">Phone</string>
+    <string name="logout">Logout</string>
+
+    <string-array name="user_types">
+        <item>Hotel</item>
+        <item>Pet Owner</item>
+    </string-array>
+    <string name="current_rating">Current Rating:</string>
+    <string name="welcome_name">Welcome, %s!</string>
+    <string name="upcoming_reservation">Upcoming Reservations</string>
+    <string name="reservation_format">%1$s - %2$s</string>
+    <string name="no_upcoming_reservations">No upcoming reservations</string>
+    <string name="add_new_reservation">Add New Reservation</string>
+    <string name="view_all_reservations">View All Reservations</string>
+    <string name="view_all_referrals">View All Referrals</string>
+    <string name="no_referrals_yet">No referrals yet</string>
+    <string name="latest_referral">Latest Referral</string>
+    <string name="past_reservations">Past Reservations</string>
+    <string name="check_in_check_out_dates">Check-in/Check-out Dates</string>
+    <string name="no_dates_selected">No dates selected</string>
+    <string name="enter_hotel_name">Enter hotel name first</string>
+    <string name="no_hotels_found">No hotels found with that name</string>
+    <string name="error_search_failed">Search failed. Check connection.</string>
+
+    <string name="title_select_period">Select Stay Period</string>
+    <string name="selected_dates_format">Selected: %1$s to %2$s</string>
+    <string name="error_select_dates">Please select dates</string>
+    <string name="booking_success">Processing reservation at %1$s</string>
+    <string name="hotel_name_display">%1$s</string>
+    <string name="delete">Delete</string>
+    <string name="search_hotel">Search Hotel</string>
+    <string name="searching_hotel_data">Searching for hotel data…</string>
+    <string name="add_review">Add Review</string>
+    <string name="view_review">View Review</string>
+    <string name="save_review">Save Review</string>
+    <string name="review_title_add">Add Review</string>
+    <string name="review_title_view">Review</string>
+    <string name="rating">Rating</string>
+    <string name="detail_location">%1$s, %2$s</string>
+    <string name="detail_period">Period: %1$s to %2$s</string>
+    <string name="detail_guest">Guest: %1$s %2$s</string>
+    <string name="detail_review_label">Review: %1$s</string>
+    <string name="no_review_given">No review given</string>
+    <string name="profile">Profile</string>
+    <string name="pet_name">Pet Name</string>
+    <string name="breed">Breed</string>
+    <string name="change_password">Change Password</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+    <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="profile_updated_successfully">Profile updated successfully</string>
+    <string name="my_pets">My Pets</string>
+    <string name="add_pet">Add Pet</string>
+    <string name="save_profile">Save Profile</string>
+    <string name="pet_type">Pet Type</string>
+    <string name="chip_number">Chip Number</string>
+    <string name="select_pets">Select Pets</string>
+    <string name="no_pets_selected">No pets selected</string>
+    <string name="no_pets_found">"No pets found in your profile</string>
+    <string name="confirm_reservation">Confirm Reservation</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+
+    <string name="pet_breed_label">Breed: %1$s</string>
+    <string name="pet_birth_date_label">Birth date: %1$s</string>
+    <string name="pet_chip_label">Chip: %1$s</string>
+    <string name="pets">Pets:</string>
+    <string name="none">None</string>
+
+    <string name="notification_title">Active Reservation</string>
+    <string name="notification_content">You have an active booking! Don\'t forget to ask for a review.</string>
+    <string name="action_stop">Stop</string>
+    <string name="action_snooze">Snooze</string>
+    <string name="notifications_disabled">Please enable notifications in settings</string>
+</resources>

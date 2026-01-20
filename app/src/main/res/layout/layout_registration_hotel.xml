@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxWidth="600dp"
+            android:orientation="vertical">
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/PetInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/field_margin_bottom">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_h_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/hotel_name"
+                    android:textColor="@color/brown"
+                    android:paddingVertical="@dimen/input_vertical_padding" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btn_search_hotel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/search_hotel"
+                android:layout_gravity="end"
+                android:backgroundTint="@color/pet_gold"
+                android:textColor="@android:color/white"/>
+
+            <ProgressBar
+                android:id="@+id/pb_loading"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:visibility="gone" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/PetInputLayout"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/field_margin_bottom">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_h_chain"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/chain_name"
+                    android:textColor="@color/brown"
+                    android:paddingVertical="@dimen/input_vertical_padding" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout style="@style/PetInputLayout"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/field_margin_bottom">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_h_country"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:hint="@string/country" android:textColor="@color/brown" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout style="@style/PetInputLayout"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/field_margin_bottom">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_h_city"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:hint="@string/city" android:textColor="@color/brown" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout style="@style/PetInputLayout"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/field_margin_bottom">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_h_postal"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:hint="@string/postal_code" android:textColor="@color/brown" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout style="@style/PetInputLayout"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/field_margin_bottom">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_h_street"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:hint="@string/street_address" android:textColor="@color/brown" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout style="@style/PetInputLayout"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/field_margin_bottom">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_h_phone_p"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:hint="@string/primary_phone" android:inputType="phone" android:textColor="@color/brown" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout style="@style/PetInputLayout"
+                android:layout_width="match_parent" android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_h_desc"
+                    android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:hint="@string/description" android:inputType="textMultiLine"
+                    android:lines="3" android:textColor="@color/brown" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -1,0 +1,17 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <!-- Base application theme. -->
+    <style name="Base.Theme.ReferMyPet" parent="Theme.Material3.DayNight.NoActionBar">
+        <!-- Customize your light theme here. -->
+        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+    </style>
+
+    <style name="Theme.ReferMyPet" parent="Base.Theme.ReferMyPet" />
+
+    <style name="PetInputLayout" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="hintTextColor">@color/pet_gold</item>
+        <item name="boxStrokeColor">@color/dark_brown</item>
+        <item name="colorPrimary">@color/pet_gold</item>
+        <item name="android:textColorHint">@color/pet_gold</item>
+        <item name="passwordToggleTint">@color/pet_gold</item>
+    </style>
+</resources>

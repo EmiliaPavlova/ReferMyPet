@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="24dp"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_review_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/review_title_add"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/brown"
+        android:layout_marginBottom="16dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/rating"
+        android:textSize="14sp"
+        android:textColor="@color/brown"
+        android:layout_marginBottom="4dp" />
+
+    <RatingBar
+        android:id="@+id/rb_review_rating"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:numStars="5"
+        android:stepSize="1.0"
+        android:progressTint="@color/brown"
+        android:layout_marginBottom="16dp"
+        style="?android:attr/ratingBarStyle" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Review Text"
+        android:textSize="14sp"
+        android:textColor="@color/brown"
+        android:layout_marginBottom="4dp" />
+
+    <EditText
+        android:id="@+id/et_review_comment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minLines="3"
+        android:gravity="top"
+        android:inputType="textMultiLine"
+        android:padding="8dp"
+        android:background="@android:drawable/edit_text"
+        android:layout_marginBottom="24dp" />
+
+    <Button
+        android:id="@+id/btn_save_review"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/save_review"
+        android:backgroundTint="@color/pet_gold"
+        android:textColor="@color/white" />
+
+</LinearLayout>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="black">#FF000000</color>
+    <color name="white">#FFFFFFFF</color>
+    <color name="beige">#F5E3B5</color>
+    <color name="brown">#3A2F1F</color>
+    <color name="pink">#F4C6C6</color>
+    <color name="creamy">#FDF6EC</color>
+    <color name="dark_brown">#5C3B1E</color>
+    <color name="dark_gray">#2B2B2B</color>
+    <color name="accent_yellow">#FFC107</color>
+    <color name="pet_gold">#F5B041</color>
+    <color name="border_color">#66000000</color>
+</resources>
