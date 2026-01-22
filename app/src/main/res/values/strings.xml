@@ -71,6 +71,7 @@
     <string name="detail_period">Period: %1$s to %2$s</string>
     <string name="detail_guest">Guest: %1$s %2$s</string>
     <string name="detail_review_label">Review: %1$s</string>
+    <string name="rate_guest_and_pets">Rate %1$s &amp; %2$s</string>
     <string name="no_review_given">No review given</string>
     <string name="profile">Profile</string>
     <string name="pet_name">Pet Name</string>

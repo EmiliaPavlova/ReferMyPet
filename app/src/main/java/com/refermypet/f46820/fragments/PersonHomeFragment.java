@@ -86,22 +86,47 @@ public class PersonHomeFragment extends Fragment {
         });
 
         // Referral
-        userViewModel.getLatestReferral().observe(getViewLifecycleOwner(), referral -> {
-            layoutLatestReferral.setVisibility(View.VISIBLE);
+//        userViewModel.getLatestReferral().observe(getViewLifecycleOwner(), referral -> {
+//            layoutLatestReferral.setVisibility(View.VISIBLE);
+//
+//            View tvViewAll = getView() != null ? getView().findViewById(R.id.tv_view_all_referrals) : null;
+//
+//            if (referral == null) {
+//                tvNoReferrals.setVisibility(View.VISIBLE);
+//                if (tvViewAll != null) {
+//                    tvViewAll.setVisibility(View.GONE);
+//                }
+//                ratingBar.setRating(0);
+//                tvReferralText.setText("");
+//            } else {
+//                tvNoReferrals.setVisibility(View.GONE);
+//                ratingBar.setRating(referral.getRatingScore());
+//                tvReferralText.setText(referral.getRecommendationText());
+//            }
+//        });
 
-            View tvViewAll = getView() != null ? getView().findViewById(R.id.tv_view_all_referrals) : null;
+        userViewModel.getAllBookingsList().observe(getViewLifecycleOwner(), allBookings -> {
+            if (allBookings != null) {
+                float avgRating = userViewModel.getCalculatedAverageRating();
+                String latestText = userViewModel.getLatestReferralText();
 
-            if (referral == null) {
-                tvNoReferrals.setVisibility(View.VISIBLE);
-                if (tvViewAll != null) {
-                    tvViewAll.setVisibility(View.GONE);
+                if (latestText == null) {
+                    tvNoReferrals.setVisibility(View.VISIBLE);
+                    layoutLatestReferral.setVisibility(View.GONE);
+                    ratingBar.setRating(0);
+                    tvReferralText.setText("");
+                } else {
+                    tvNoReferrals.setVisibility(View.GONE);
+                    layoutLatestReferral.setVisibility(View.VISIBLE);
+
+                    ratingBar.setRating(avgRating);
+                    tvReferralText.setText(latestText);
+
+                    View tvViewAll = getView() != null ? getView().findViewById(R.id.tv_view_all_referrals) : null;
+                    if (tvViewAll != null) {
+                        tvViewAll.setVisibility(View.VISIBLE);
+                    }
                 }
-                ratingBar.setRating(0);
-                tvReferralText.setText("");
-            } else {
-                tvNoReferrals.setVisibility(View.GONE);
-                ratingBar.setRating(referral.getRatingScore());
-                tvReferralText.setText(referral.getRecommendationText());
             }
         });
     }
@@ -160,5 +185,7 @@ public class PersonHomeFragment extends Fragment {
                     .commit();
             });
         }
+
+        userViewModel.loadAllBookings(userViewModel.getCurrentUserId());
     }
 }

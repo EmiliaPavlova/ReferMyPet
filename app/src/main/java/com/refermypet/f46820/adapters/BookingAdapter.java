@@ -8,7 +8,9 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import com.refermypet.f46820.R;
+import com.refermypet.f46820.enums.UserType;
 import com.refermypet.f46820.model.BookingWithHotel;
+import com.refermypet.f46820.model.Pet;
 import com.refermypet.f46820.viewmodel.UserViewModel;
 
 import java.util.ArrayList;
@@ -16,7 +18,7 @@ import java.util.List;
 
 /**
  * Adapter for displaying booking records in a RecyclerView.
- * Supports a click listener to handle navigation to detail screens.
+ * Supports click listeners for navigation and review actions.
  */
 public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingViewHolder> {
 
@@ -52,7 +54,7 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
         BookingWithHotel item = bookings.get(position);
         android.content.Context context = holder.itemView.getContext();
 
-        // Format and display the reservation dates
+        // Format and display reservation dates
         if (item.booking != null) {
             String period = context.getString(R.string.reservation_format,
                     item.booking.startDate,
@@ -61,10 +63,10 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
         }
 
         // Identify the current user role to determine UI logic
-        com.refermypet.f46820.enums.UserType role = viewModel.getUserType().getValue();
+        UserType role = viewModel.getUserType().getValue();
 
         // Configure UI based on the user's role (HOTEL vs PERSON)
-        if (role == com.refermypet.f46820.enums.UserType.HOTEL) {
+        if (role == UserType.HOTEL) {
             // Hotel View: Display Guest information
             if (item.person != null) {
                 String guestName = item.person.getFirstName() + " " + item.person.getLastName();
@@ -72,13 +74,14 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
                 holder.tvHotelCity.setText(item.person.getCity()); // Refers to R.id.tv_hotel_city
             }
 
-            // Show and configure the review link for Hotel users only
-            holder.tvAddReview.setVisibility(View.VISIBLE);
-            String reviewText = item.hasReview ?
-                    context.getString(R.string.view_review) :
-                    context.getString(R.string.add_review);
-            holder.tvAddReview.setText(reviewText);
-
+            // Logic to hide the "Add Review" button if a referral already exists
+            boolean hasReview = item.referrals != null && !item.referrals.isEmpty();
+            if (hasReview) {
+                holder.tvAddReview.setVisibility(View.GONE);
+            } else {
+                holder.tvAddReview.setVisibility(View.VISIBLE);
+                holder.tvAddReview.setText(context.getString(R.string.add_review));
+            }
         } else {
             // Person View: Display Hotel information
             if (item.hotel != null) {
@@ -91,7 +94,8 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
             holder.tvAddReview.setVisibility(View.GONE);
         }
 
-        List<com.refermypet.f46820.model.Pet> pets = item.booking.selectedPets;
+        // List selected pets
+        List<Pet> pets = item.booking.selectedPets;
         String label = context.getString(R.string.pets);
         if (pets != null && !pets.isEmpty()) {
             StringBuilder sb = new StringBuilder(label);
@@ -107,9 +111,6 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
             String finalText = label.endsWith(" ") ? label + none : label + " " + none;
             holder.tvPets.setText(finalText);
         }
-
-        // Setup Click Listeners
-        holder.ivDelete.setOnClickListener(v -> viewModel.deleteBooking(item.booking));
 
         // Setup Click Listeners
         holder.ivDelete.setOnClickListener(v -> viewModel.deleteBooking(item.booking));

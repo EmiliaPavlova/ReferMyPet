@@ -26,7 +26,7 @@ public class BookingWithHotel {
             parentColumn = "booking_id",
             entityColumn = "booking_fk_id"
     )
-    public Referral referral;
+    public List<Referral> referrals;
 
     @Ignore
     public List<Pet> getPets() {

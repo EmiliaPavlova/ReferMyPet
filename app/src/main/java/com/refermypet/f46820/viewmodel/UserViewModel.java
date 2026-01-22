@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.refermypet.f46820.AppDatabase;
+import com.refermypet.f46820.BookingReminderWorker;
 import com.refermypet.f46820.enums.UserType;
 import com.refermypet.f46820.model.Booking;
 import com.refermypet.f46820.model.BookingWithHotel;
@@ -44,6 +45,8 @@ public class UserViewModel extends AndroidViewModel {
     private final MutableLiveData<String> passwordStatus = new MutableLiveData<>();
     public LiveData<String> getPasswordStatus() { return passwordStatus; }
 
+    private final MutableLiveData<Float> ownerAverageRating = new MutableLiveData<>();
+
     private int currentPersonId;
     private int currentUserId;
     private final ExecutorService executorService = Executors.newSingleThreadExecutor();
@@ -66,6 +69,7 @@ public class UserViewModel extends AndroidViewModel {
     public LiveData<Person> getCurrentPerson() { return currentPerson; }
     public LiveData<Hotel> getCurrentHotel() { return currentHotel; }
     public LiveData<List<Pet>> getUserPets() { return userPets; }
+    public LiveData<Float> getOwnerAverageRating() { return ownerAverageRating; }
 
     /**
      * Returns the currently memorized user ID.
@@ -87,11 +91,9 @@ public class UserViewModel extends AndroidViewModel {
      */
     public void addBooking(int personId, int hotelId, String startDate, String endDate, List<Pet> selectedPets) {
         executorService.execute(() -> {
-            // Using the constructor defined in Booking.java
             Booking newBooking = new Booking(personId, hotelId, startDate, endDate, selectedPets);
             db.bookingDao().insert(newBooking);
-
-            // Reload dashboard data to show the new booking immediately
+            BookingReminderWorker.scheduleReminder(getApplication(), endDate);
             loadDashboardData(currentUserId);
         });
     }
@@ -106,6 +108,12 @@ public class UserViewModel extends AndroidViewModel {
             if (person != null) {
                 List<BookingWithHotel> all = db.bookingDao().getAllBookingsForPersonSync(person.getId());
                 allBookingsList.postValue(all);
+
+                for (BookingWithHotel b : all) {
+                    if (b.booking != null) {
+                        BookingReminderWorker.scheduleReminder(getApplication(), b.booking.endDate);
+                    }
+                }
             }
         });
     }
@@ -124,7 +132,7 @@ public class UserViewModel extends AndroidViewModel {
                 if (past != null) {
                     for (BookingWithHotel b : past) {
                         if (b.booking != null) {
-                            boolean exists = (b.referral != null);
+                            boolean exists = (b.referrals != null && !b.referrals.isEmpty());
                             if (!exists) {
                                 exists = db.bookingDao().getReviewCountForBooking(b.booking.id) > 0;
                             }
@@ -142,22 +150,20 @@ public class UserViewModel extends AndroidViewModel {
      */
     public void addReview(BookingWithHotel item, float rating, String text) {
         executorService.execute(() -> {
-            // Note: pet_fk_id is needed for Referral. Using a default or look-up logic might be needed
-            // if not directly in Booking. For now, we assume logic to provide petId.
-            int petId = 1;
-
-            Referral newReferral = new Referral(
-                    item.booking.id,
-                    petId,
-                    item.hotel.id,
-                    rating,
-                    text,
-                    item.booking.endDate
-            );
-
-            db.referralDao().insert(newReferral);
-
-            // Refresh the past bookings to update the UI button text
+            List<Pet> pets = item.getPets();
+            if (pets != null) {
+                for (Pet pet : pets) {
+                    Referral newReferral = new Referral(
+                            item.booking.id,
+                            pet.id,
+                            item.hotel.id,
+                            rating,
+                            text,
+                            item.booking.endDate
+                    );
+                    db.referralDao().insert(newReferral);
+                }
+            }
             loadPastBookingsForHotel(currentUserId);
         });
     }
@@ -180,7 +186,6 @@ public class UserViewModel extends AndroidViewModel {
     public void deleteBooking(com.refermypet.f46820.model.Booking booking) {
         executorService.execute(() -> {
             db.bookingDao().delete(booking);
-            // Reload bookings list
             loadDashboardData(currentUserId);
         });
     }
@@ -197,7 +202,6 @@ public class UserViewModel extends AndroidViewModel {
                 Person person = db.personDao().getPersonByUserId(userId);
                 if (person != null) {
                     currentPerson.postValue(person);
-                    // Load pets for this person
                     List<Pet> pets = db.petDao().getPetsByOwnerId(person.getId());
                     userPets.postValue(pets);
                 }
@@ -288,7 +292,6 @@ public class UserViewModel extends AndroidViewModel {
      * @param userId The ID of the logged-in user.
      */
     public void loadDashboardData(int userId) {
-        // memorize current user id for addBooking
         this.currentUserId = userId;
 
         executorService.execute(() -> {
@@ -305,7 +308,15 @@ public class UserViewModel extends AndroidViewModel {
                         currentPersonId = person.getId();
                         userName.postValue(person.getFirstName());
                         bookingsList.postValue(db.bookingDao().getBookingsForPersonSync(person.getId(), currentDate));
-                        latestReferral.postValue(db.referralDao().getLatestReferralByUserId(userId));
+                        latestReferral.postValue(db.referralDao().getLatestReferralForOwner(person.getId()).getValue());
+
+                        db.referralDao().getAverageRatingForOwner(person.getId()).observeForever(avg -> {
+                            if (avg != null) ownerAverageRating.postValue(avg);
+                        });
+
+                        db.referralDao().getLatestReferralForOwner(person.getId()).observeForever(ref -> {
+                            if (ref != null) latestReferral.postValue(ref);
+                        });
                     }
                 } else if (user.getUserType() == UserType.HOTEL) {
                     Hotel hotel = db.hotelDao().getHotelByUserId(userId);
@@ -320,6 +331,42 @@ public class UserViewModel extends AndroidViewModel {
                 e.printStackTrace();
             }
         });
+    }
+
+    /**
+     * Calculates the average rating using the 'allBookingsList' variable.
+     */
+    public float getCalculatedAverageRating() {
+        List<BookingWithHotel> bookings = allBookingsList.getValue();
+        if (bookings == null || bookings.isEmpty()) return 0.0f;
+
+        float totalScore = 0;
+        int count = 0;
+
+        for (BookingWithHotel item : bookings) {
+            if (item.referrals != null && !item.referrals.isEmpty()) {
+                for (com.refermypet.f46820.model.Referral ref : item.referrals) {
+                    totalScore += ref.getRatingScore();
+                    count++;
+                }
+            }
+        }
+        return count > 0 ? totalScore / count : 0.0f;
+    }
+
+    /**
+     * Gets the latest referral text using the 'allBookingsList' variable.
+     */
+    public String getLatestReferralText() {
+        List<BookingWithHotel> bookings = allBookingsList.getValue();
+        if (bookings == null || bookings.isEmpty()) return null;
+
+        for (BookingWithHotel item : bookings) {
+            if (item.referrals != null && !item.referrals.isEmpty()) {
+                return item.referrals.get(0).getRecommendationText();
+            }
+        }
+        return null;
     }
 
     @Override

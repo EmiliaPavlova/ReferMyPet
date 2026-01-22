@@ -50,18 +50,6 @@ public class AddBookingFragment extends Fragment {
     private String startDate = "";
     private String endDate = "";
 
-    // Register the permissions callback to handle the user's response
-    private final ActivityResultLauncher<String> requestPermissionLauncher =
-            registerForActivityResult(new ActivityResultContracts.RequestPermission(), isGranted -> {
-                if (isGranted) {
-                    // Permission granted, trigger the service
-                    startBookingService();
-                } else {
-                    // Feedback for user if permissions are denied
-                    Toast.makeText(getContext(), getString(R.string.notifications_disabled), Toast.LENGTH_SHORT).show();
-                }
-            });
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -76,22 +64,25 @@ public class AddBookingFragment extends Fragment {
 
         spinnerHotels = view.findViewById(R.id.spinner_hotels);
         tvSelectedDates = view.findViewById(R.id.tv_selected_dates);
+        tvSelectedPets = view.findViewById(R.id.tv_selected_pets);
+
         Button btnSelectDates = view.findViewById(R.id.btn_select_dates);
         Button btnSelectPets = view.findViewById(R.id.btn_select_pets);
         Button btnConfirm = view.findViewById(R.id.btn_confirm_booking);
 
         setupHotelSpinner();
 
-        btnSelectDates.setOnClickListener(v -> showDatePicker());
+        // Load user pets to ensure the selection dialog has data
+        int userId = userViewModel.getCurrentUserId();
+        userViewModel.loadUserProfile(userId);
 
         userViewModel.getUserPets().observe(getViewLifecycleOwner(), pets -> {
             if (pets != null) {
                 this.personPets = pets;
             }
         });
-        int userId = userViewModel.getCurrentUserId();
-        userViewModel.loadUserProfile(userId);
-        tvSelectedPets = view.findViewById(R.id.tv_selected_pets);
+
+        btnSelectDates.setOnClickListener(v -> showDatePicker());
 
         btnSelectPets.setOnClickListener(v -> showPetSelectionDialog());
 
@@ -192,45 +183,5 @@ public class AddBookingFragment extends Fragment {
         Toast.makeText(getContext(), successMsg, Toast.LENGTH_SHORT).show();
 
         getParentFragmentManager().popBackStack();
-
-        com.refermypet.f46820.enums.UserType role = userViewModel.getUserType().getValue();
-
-        // Start notification service only for PERSON role
-        if (role == com.refermypet.f46820.enums.UserType.PERSON) {
-            checkAndStartService();
-        }
-
-        getParentFragmentManager().popBackStack();
-    }
-
-    /**
-     * Verifies notification permissions for Android 13+ and starts the service.
-     */
-    private void checkAndStartService() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            if (ContextCompat.checkSelfPermission(requireContext(), Manifest.permission.POST_NOTIFICATIONS) ==
-                    PackageManager.PERMISSION_GRANTED) {
-                startBookingService();
-            } else {
-                // Requesting permission at runtime for Android 13+
-                requestPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS);
-            }
-        } else {
-            // Direct start for older Android versions
-            startBookingService();
-        }
-    }
-
-    /**
-     * Initializes the reminder service.
-     */
-    private void startBookingService() {
-        // Check if we have a valid context and if the fragment is still attached
-        if (getContext() != null) {
-            Intent serviceIntent = new Intent(requireContext(), BookingReminderService.class);
-            // Pass the end date so isBookingExpired() doesn't stop the service immediately
-            serviceIntent.putExtra("end_date", endDate);
-            requireContext().startService(serviceIntent);
-        }
     }
 }

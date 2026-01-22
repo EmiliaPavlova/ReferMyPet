@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.refermypet.f46820.R;
 import com.refermypet.f46820.adapters.BookingAdapter;
 import com.refermypet.f46820.model.BookingWithHotel;
+import com.refermypet.f46820.model.Referral;
 import com.refermypet.f46820.viewmodel.UserViewModel;
 
 import org.jspecify.annotations.NonNull;
@@ -99,13 +100,15 @@ public class PastBookingsFragment extends Fragment {
         AlertDialog dialog = builder.create();
 
         // Configure the dialog mode based on whether a review already exists
-        if (item.hasReview && item.referral != null) {
+        if (item.hasReview && item.referrals != null && !item.referrals.isEmpty()) {
+            Referral currentRef = item.referrals.get(0);
+
             // Read-only mode
             tvTitle.setText(getString(R.string.review_title_view));
-            ratingBar.setRating((float) item.referral.ratingScore);
+            ratingBar.setRating(currentRef.getRatingScore());
             ratingBar.setIsIndicator(true); // Disable interaction
 
-            etComment.setText(item.referral.recommendationText);
+            etComment.setText(currentRef.getRecommendationText());
             etComment.setEnabled(false); // Disable typing
 
             btnSave.setVisibility(View.GONE); // Hide save button

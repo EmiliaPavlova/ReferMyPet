@@ -4,6 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
@@ -15,7 +18,10 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.refermypet.f46820.R;
 import com.refermypet.f46820.adapters.BookingAdapter;
 import com.refermypet.f46820.model.BookingWithHotel;
+import com.refermypet.f46820.model.Pet;
 import com.refermypet.f46820.viewmodel.UserViewModel;
+
+import java.util.List;
 
 public class HotelHomeFragment extends Fragment {
 
@@ -29,7 +35,7 @@ public class HotelHomeFragment extends Fragment {
 
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
-//        // Upcoming
+        // Upcoming
         RecyclerView rvUpcoming = view.findViewById(R.id.rv_bookings);
         rvUpcoming.setLayoutManager(new LinearLayoutManager(getContext()));
         upcomingAdapter = new BookingAdapter(userViewModel);
@@ -40,9 +46,9 @@ public class HotelHomeFragment extends Fragment {
         if (tvViewPast != null) {
             tvViewPast.setOnClickListener(v -> {
                 getParentFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new PastBookingsFragment())
-                    .addToBackStack(null)
-                    .commit();
+                        .replace(R.id.fragment_container, new PastBookingsFragment())
+                        .addToBackStack(null)
+                        .commit();
             });
         }
 
@@ -64,7 +70,6 @@ public class HotelHomeFragment extends Fragment {
             public void onReviewClick(BookingWithHotel item) {
                 // This handles clicking on "Add Review" - Open Review screen
                 if (item != null && item.booking != null) {
-                    // If you have a separate Review Fragment, change it here
                     showReviewDialog(item);
                 }
             }
@@ -82,9 +87,9 @@ public class HotelHomeFragment extends Fragment {
         detailFragment.setArguments(args);
 
         getParentFragmentManager().beginTransaction()
-            .replace(R.id.fragment_container, detailFragment)
-            .addToBackStack(null)
-            .commit();
+                .replace(R.id.fragment_container, detailFragment)
+                .addToBackStack(null)
+                .commit();
     }
 
     @Override
@@ -113,24 +118,47 @@ public class HotelHomeFragment extends Fragment {
         });
     }
 
-    // Review dialog
+    /**
+     * Shows the review dialog where the hotel can rate the guest and their pets.
+     */
     private void showReviewDialog(BookingWithHotel item) {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
         LayoutInflater inflater = getLayoutInflater();
         View dialogView = inflater.inflate(R.layout.dialog_review, null);
         builder.setView(dialogView);
 
-        RatingBar ratingBar = dialogView.findViewById(R.id.ratingBar);
-        android.widget.EditText etComment = dialogView.findViewById(R.id.et_review_comment);
+        android.app.AlertDialog dialog = builder.create();
 
-        builder.setTitle("Add Review for " + item.hotel.getName());
-        builder.setPositiveButton("Submit", (dialog, which) -> {
+        TextView tvTitle = dialogView.findViewById(R.id.tv_review_title);
+        RatingBar ratingBar = dialogView.findViewById(R.id.rb_review_rating);
+        EditText etComment = dialogView.findViewById(R.id.et_review_comment);
+        Button btnSave = dialogView.findViewById(R.id.btn_save_review);
+        ImageButton btnClose = dialogView.findViewById(R.id.btn_close_dialog);
+
+        // pets names
+        StringBuilder petsName = new StringBuilder();
+        List<Pet> pets = item.getPets();
+        if (pets != null && !pets.isEmpty()) {
+            for (int i = 0; i < pets.size(); i++) {
+                petsName.append(pets.get(i).name);
+                if (i < pets.size() - 1) petsName.append(", ");
+            }
+        }
+
+        String personName = (item.person != null) ? item.person.getFirstName() : "Guest";
+
+        String formattedTitle = getString(R.string.rate_guest_and_pets, personName, petsName.toString());
+        tvTitle.setText(formattedTitle);
+
+        btnSave.setOnClickListener(v -> {
             float rating = ratingBar.getRating();
             String comment = etComment.getText().toString();
             userViewModel.addReview(item, rating, comment);
+            dialog.dismiss();
         });
-        builder.setNegativeButton("Cancel", null);
 
-        builder.create().show();
+        btnClose.setOnClickListener(v -> dialog.dismiss());
+
+        dialog.show();
     }
 }

@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -14,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.refermypet.f46820.R;
 import com.refermypet.f46820.adapters.BookingPetsAdapter;
+import com.refermypet.f46820.model.Referral;
 import com.refermypet.f46820.viewmodel.UserViewModel;
 
 public class BookingDetailFragment extends Fragment {
@@ -64,18 +66,33 @@ public class BookingDetailFragment extends Fragment {
                             tvGuestName.setText(getString(R.string.detail_guest, item.person.getFirstName(), item.person.getLastName()));
                         }
 
-                        if (item.booking.selectedPets != null && !item.booking.selectedPets.isEmpty()) {
+                        if (item.booking != null && item.booking.selectedPets != null && !item.booking.selectedPets.isEmpty()) {
                             rvPets.setVisibility(View.VISIBLE);
-                            BookingPetsAdapter adapter = new BookingPetsAdapter(item.booking.selectedPets);
+                            BookingPetsAdapter adapter = new BookingPetsAdapter(item.booking.selectedPets, item.referrals);
                             rvPets.setAdapter(adapter);
                         } else {
                             rvPets.setVisibility(View.GONE);
                         }
 
-                        if (item.referral != null && item.referral.recommendationText != null && !item.referral.recommendationText.isEmpty()) {
-                            tvReview.setText(getString(R.string.detail_review_label, item.referral.recommendationText));
+                        RatingBar rbDetailReview = view.findViewById(R.id.rb_detail_review_stars);
+
+                        if (item.referrals != null && !item.referrals.isEmpty()) {
+                            Referral firstRef = item.referrals.get(0); // Вземаме първия запис
+
+                            tvReview.setText(getString(R.string.detail_review_label, firstRef.recommendationText));
+
+                            if (rbDetailReview != null) {
+                                rbDetailReview.setVisibility(View.VISIBLE);
+                                rbDetailReview.setRating(firstRef.ratingScore); // Вече е ratingScore
+                            }
                         } else {
                             tvReview.setText(getString(R.string.no_review_given));
+                            if (rbDetailReview != null) rbDetailReview.setVisibility(View.GONE);
+                        }
+
+                        if (item.booking != null && item.booking.selectedPets != null) {
+                            BookingPetsAdapter adapter = new BookingPetsAdapter(item.booking.selectedPets, item.referrals);
+                            rvPets.setAdapter(adapter);
                         }
                     }
                 });
