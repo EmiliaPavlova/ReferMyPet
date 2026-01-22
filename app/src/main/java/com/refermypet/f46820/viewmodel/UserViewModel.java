@@ -164,6 +164,7 @@ public class UserViewModel extends AndroidViewModel {
                     db.referralDao().insert(newReferral);
                 }
             }
+            loadAllBookings(currentUserId);
             loadPastBookingsForHotel(currentUserId);
         });
     }

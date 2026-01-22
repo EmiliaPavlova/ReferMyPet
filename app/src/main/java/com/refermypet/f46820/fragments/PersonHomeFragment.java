@@ -12,11 +12,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.refermypet.f46820.R;
-import com.refermypet.f46820.adapters.BookingAdapter;
 import com.refermypet.f46820.model.BookingWithHotel;
 import com.refermypet.f46820.viewmodel.UserViewModel;
 
@@ -31,8 +28,7 @@ public class PersonHomeFragment extends Fragment {
 
     // Reservations (List instead of single view)
     private TextView tvNoReservations;
-    private RecyclerView rvBookings;
-    private BookingAdapter bookingAdapter;
+    private View layoutUpcomingBooking;
 
     // Referrals (Single view - latest)
     private TextView tvNoReferrals;
@@ -47,17 +43,14 @@ public class PersonHomeFragment extends Fragment {
 
         tvWelcome = view.findViewById(R.id.tv_welcome);
         tvNoReservations = view.findViewById(R.id.tv_no_reservations);
-        rvBookings = view.findViewById(R.id.rv_bookings);
+        layoutUpcomingBooking = view.findViewById(R.id.layout_upcoming_booking);
 
         tvNoReferrals = view.findViewById(R.id.tv_no_referrals);
         layoutLatestReferral = view.findViewById(R.id.layout_latest_referral);
         ratingBar = view.findViewById(R.id.ratingBar);
         tvReferralText = view.findViewById(R.id.tv_referral_text);
 
-        rvBookings.setLayoutManager(new LinearLayoutManager(getContext()));
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
-        bookingAdapter = new BookingAdapter(userViewModel);
-        rvBookings.setAdapter(bookingAdapter);
 
         setupObservers();
         setupClickListeners();
@@ -76,35 +69,29 @@ public class PersonHomeFragment extends Fragment {
         // Bookings
         userViewModel.getBookingsList().observe(getViewLifecycleOwner(), bookings -> {
             if (bookings != null && !bookings.isEmpty()) {
-                rvBookings.setVisibility(View.VISIBLE);
+                layoutUpcomingBooking.setVisibility(View.VISIBLE);
                 tvNoReservations.setVisibility(View.GONE);
-                bookingAdapter.setBookings(bookings);
+
+                BookingWithHotel latest = bookings.get(0);
+
+                TextView tvHotelName = layoutUpcomingBooking.findViewById(R.id.tv_name);
+                TextView tvBookingDates = layoutUpcomingBooking.findViewById(R.id.tv_booking_dates);
+
+                if (latest.hotel != null) {
+                    tvHotelName.setText(latest.hotel.getName());
+                }
+                String dateRange = latest.booking.startDate + " - " + latest.booking.endDate;
+                tvBookingDates.setText(dateRange);
+
+                layoutUpcomingBooking.setOnClickListener(v -> navigateToDetails(latest.booking.id));
+
             } else {
-                rvBookings.setVisibility(View.GONE);
+                layoutUpcomingBooking.setVisibility(View.GONE);
                 tvNoReservations.setVisibility(View.VISIBLE);
             }
         });
 
         // Referral
-//        userViewModel.getLatestReferral().observe(getViewLifecycleOwner(), referral -> {
-//            layoutLatestReferral.setVisibility(View.VISIBLE);
-//
-//            View tvViewAll = getView() != null ? getView().findViewById(R.id.tv_view_all_referrals) : null;
-//
-//            if (referral == null) {
-//                tvNoReferrals.setVisibility(View.VISIBLE);
-//                if (tvViewAll != null) {
-//                    tvViewAll.setVisibility(View.GONE);
-//                }
-//                ratingBar.setRating(0);
-//                tvReferralText.setText("");
-//            } else {
-//                tvNoReferrals.setVisibility(View.GONE);
-//                ratingBar.setRating(referral.getRatingScore());
-//                tvReferralText.setText(referral.getRecommendationText());
-//            }
-//        });
-
         userViewModel.getAllBookingsList().observe(getViewLifecycleOwner(), allBookings -> {
             if (allBookings != null) {
                 float avgRating = userViewModel.getCalculatedAverageRating();
@@ -132,19 +119,7 @@ public class PersonHomeFragment extends Fragment {
     }
 
     private void setupClickListeners() {
-        bookingAdapter.setOnItemClickListener(new BookingAdapter.OnItemClickListener() {
-            @Override
-            public void onItemClick(BookingWithHotel item) {
-                if (item != null && item.booking != null) {
-                    navigateToDetails(item.booking.id);
-                }
-            }
-
-            @Override
-            public void onReviewClick(BookingWithHotel item) {
-                // Not implemented for person home
-            }
-        });
+        // Not implemented for person home
     }
 
     private void navigateToDetails(int bookingId) {
@@ -169,9 +144,9 @@ public class PersonHomeFragment extends Fragment {
         if (addReservationLink != null) {
             addReservationLink.setOnClickListener(v -> {
                 getParentFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new AddBookingFragment())
-                    .addToBackStack(null)
-                    .commit();
+                        .replace(R.id.fragment_container, new AddBookingFragment())
+                        .addToBackStack(null)
+                        .commit();
             });
         }
 
@@ -180,9 +155,9 @@ public class PersonHomeFragment extends Fragment {
         if (viewAllReservations != null) {
             viewAllReservations.setOnClickListener(v -> {
                 getParentFragmentManager().beginTransaction()
-                    .replace(R.id.fragment_container, new AllBookingsFragment())
-                    .addToBackStack(null)
-                    .commit();
+                        .replace(R.id.fragment_container, new AllBookingsFragment())
+                        .addToBackStack(null)
+                        .commit();
             });
         }
 
