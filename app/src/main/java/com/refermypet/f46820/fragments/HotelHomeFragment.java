@@ -4,10 +4,6 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,10 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.refermypet.f46820.R;
 import com.refermypet.f46820.adapters.BookingAdapter;
 import com.refermypet.f46820.model.BookingWithHotel;
-import com.refermypet.f46820.model.Pet;
 import com.refermypet.f46820.viewmodel.UserViewModel;
-
-import java.util.List;
 
 public class HotelHomeFragment extends Fragment {
 
@@ -35,7 +28,7 @@ public class HotelHomeFragment extends Fragment {
 
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
-        // Upcoming
+        // Upcoming Reservations
         RecyclerView rvUpcoming = view.findViewById(R.id.rv_bookings);
         rvUpcoming.setLayoutManager(new LinearLayoutManager(getContext()));
         upcomingAdapter = new BookingAdapter(userViewModel);
@@ -60,7 +53,7 @@ public class HotelHomeFragment extends Fragment {
         upcomingAdapter.setOnItemClickListener(new BookingAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BookingWithHotel item) {
-                // This handles clicking on the ROW - Always open Details
+                // Handles clicking on the ROW - always open Details
                 if (item != null && item.booking != null) {
                     navigateToDetails(item.booking.id);
                 }
@@ -68,7 +61,7 @@ public class HotelHomeFragment extends Fragment {
 
             @Override
             public void onReviewClick(BookingWithHotel item) {
-                // Handles clicking on "Add Review" - Open Review screen
+                // Handles clicking on "Add Review" - open Review screen
                 if (item != null && item.booking != null) {
                     ReviewDialogFragment dialog = ReviewDialogFragment.newInstance(item.booking.id);
                     dialog.show(getChildFragmentManager(), "review_dialog");

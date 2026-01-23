@@ -2,7 +2,6 @@ package com.refermypet.f46820.fragments;
 
 import android.app.DatePickerDialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,7 +19,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.textfield.TextInputEditText;
 import com.refermypet.f46820.R;
 import com.refermypet.f46820.enums.PetType;
 import com.refermypet.f46820.viewmodel.UserViewModel;
@@ -146,13 +144,11 @@ public class PersonProfileFragment extends Fragment {
 
     private void addPetView(LayoutInflater inflater, @Nullable Pet pet) {
         View petView = inflater.inflate(R.layout.item_pet_input, petsContainer, false);
-
         Spinner spinner = petView.findViewById(R.id.spinner_pet_type);
         EditText etName = petView.findViewById(R.id.et_pet_name);
         EditText etBreed = petView.findViewById(R.id.et_pet_breed);
         EditText etBirth = petView.findViewById(R.id.et_pet_birth_date);
         EditText etChip = petView.findViewById(R.id.et_pet_chip);
-
         ImageButton btnRemove = petView.findViewById(R.id.btn_remove_pet);
 
         etBirth.setFocusable(false);
@@ -217,7 +213,7 @@ public class PersonProfileFragment extends Fragment {
             String confirmPass = etConfirmPassword.getText().toString().trim();
 
             if (oldPass.isEmpty() || newPass.isEmpty()) {
-                Toast.makeText(getContext(), "Please fill all password fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.fill_all_fields), Toast.LENGTH_SHORT).show();
                 return;
             }
 

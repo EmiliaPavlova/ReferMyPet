@@ -161,7 +161,7 @@ public class HotelProfileFragment extends Fragment {
             String confirmPass = etConfirmPass.getText() != null ? etConfirmPass.getText().toString() : "";
 
             if (oldPass.isEmpty() || newPass.isEmpty()) {
-                Toast.makeText(getContext(), "Please fill all password fields", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getContext(), getString(R.string.fill_all_fields), Toast.LENGTH_SHORT).show();
                 return;
             }
 

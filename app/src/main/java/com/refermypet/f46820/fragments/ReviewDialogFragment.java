@@ -57,7 +57,7 @@ public class ReviewDialogFragment extends DialogFragment {
 
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
-        // Find the specific booking item from ViewModel's current list
+        // Find the specific booking item
         List<BookingWithHotel> list = userViewModel.getBookingsList().getValue();
         if (list != null) {
             for (BookingWithHotel b : list) {
@@ -89,14 +89,14 @@ public class ReviewDialogFragment extends DialogFragment {
             }
         }
 
-        String personName = (bookingItem.person != null) ? bookingItem.person.getFirstName() : "Guest";
+        String personName = (bookingItem.person != null) ? bookingItem.person.getFirstName() : getString(R.string.guest);
         tvTitle.setText(getString(R.string.rate_guest_and_pets, personName, petsName.toString()));
 
         btnSave.setOnClickListener(v -> {
             float rating = ratingBar.getRating();
             String comment = etComment.getText().toString();
 
-            // Save to DB and refresh dashboard to trigger Observers
+            // Save to DB and refresh dashboard
             userViewModel.addReview(bookingItem, rating, comment);
             userViewModel.loadDashboardData(userViewModel.getCurrentUserId());
 

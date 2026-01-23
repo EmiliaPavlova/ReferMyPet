@@ -2,20 +2,12 @@ package com.refermypet.f46820;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.refermypet.f46820.dao.UserDao;
@@ -71,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
         String password = etPassword.getText().toString().trim();
 
         if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please enter email and password.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.error_empty_credentials), Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -103,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                 });
             } else {
-                runOnUiThread(() -> Toast.makeText(LoginActivity.this, "Email or password not valid.", Toast.LENGTH_LONG).show());
+                runOnUiThread(() -> Toast.makeText(LoginActivity.this, getString(R.string.not_valid), Toast.LENGTH_LONG).show());
             }
         });
     }

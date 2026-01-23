@@ -43,8 +43,6 @@ public class UserViewModel extends AndroidViewModel {
     private final MutableLiveData<Hotel> currentHotel = new MutableLiveData<>();
     private final MutableLiveData<List<Pet>> userPets = new MutableLiveData<>();
     private final MutableLiveData<String> passwordStatus = new MutableLiveData<>();
-    public LiveData<String> getPasswordStatus() { return passwordStatus; }
-
     private final MutableLiveData<Float> ownerAverageRating = new MutableLiveData<>();
 
     private int currentPersonId;
@@ -62,14 +60,12 @@ public class UserViewModel extends AndroidViewModel {
     public LiveData<List<BookingWithHotel>> getAllBookingsList() { return allBookingsList; }
     public LiveData<List<BookingWithHotel>> getPastBookingsList() { return pastBookingsList; }
     public LiveData<BookingWithHotel> getSelectedBooking() { return selectedBooking; }
-    public LiveData<Referral> getLatestReferral() { return latestReferral; }
     public LiveData<UserType> getUserType() { return userType; }
     public LiveData<List<Hotel>> getAllHotelsList() { return allHotels; }
     public int getCurrentPersonId() { return currentPersonId; }
     public LiveData<Person> getCurrentPerson() { return currentPerson; }
     public LiveData<Hotel> getCurrentHotel() { return currentHotel; }
     public LiveData<List<Pet>> getUserPets() { return userPets; }
-    public LiveData<Float> getOwnerAverageRating() { return ownerAverageRating; }
 
     /**
      * Returns the currently memorized user ID.

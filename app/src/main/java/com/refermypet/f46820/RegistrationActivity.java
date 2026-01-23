@@ -154,7 +154,6 @@ public class RegistrationActivity extends AppCompatActivity {
             return;
         }
 
-        // Main Thread
         pbLoading.setVisibility(View.VISIBLE);
         btnSearch.setEnabled(false);
 
@@ -256,11 +255,11 @@ public class RegistrationActivity extends AppCompatActivity {
         String confirm = etConfirm.getText().toString();
 
         if (TextUtils.isEmpty(email) || TextUtils.isEmpty(pass) || pass.length() < 5) {
-            Toast.makeText(this, "Valid email and password (min 5 chars) required!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.valid_credentials_required), Toast.LENGTH_SHORT).show();
             return;
         }
         if (!pass.equals(confirm)) {
-            etConfirm.setError("Passwords do not match!");
+            etConfirm.setError(getString(R.string.passwords_do_not_match));
             return;
         }
 
@@ -268,7 +267,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
         executorService.execute(() -> {
             if (userDao.countUsersByEmail(email) > 0) {
-                runOnUiThread(() -> Toast.makeText(this, "Email already exists!", Toast.LENGTH_SHORT).show());
+                runOnUiThread(() -> Toast.makeText(this, getString(R.string.email_exists), Toast.LENGTH_SHORT).show());
                 return;
             }
 
@@ -323,7 +322,7 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private void finishWithSuccess() {
         runOnUiThread(() -> {
-            Toast.makeText(this, "Registration Successful!", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.registration_successful), Toast.LENGTH_SHORT).show();
             finish();
         });
     }

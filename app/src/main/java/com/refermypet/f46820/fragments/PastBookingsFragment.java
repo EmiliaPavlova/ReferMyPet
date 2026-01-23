@@ -79,7 +79,6 @@ public class PastBookingsFragment extends Fragment {
         });
 
         userViewModel.loadPastBookingsForHotel(userViewModel.getCurrentUserId());
-
         return view;
     }
 
@@ -111,7 +110,7 @@ public class PastBookingsFragment extends Fragment {
             etComment.setText(currentRef.getRecommendationText());
             etComment.setEnabled(false); // Disable typing
 
-            btnSave.setVisibility(View.GONE); // Hide save button
+            btnSave.setVisibility(View.GONE);
         } else {
             // Edit mode (Add new review)
             tvTitle.setText(getString(R.string.review_title_add));

@@ -22,7 +22,7 @@ public class User {
     @ColumnInfo(name = "password_hash")
     public String passwordHash;
 
-    @ColumnInfo(name = "user_type") // Defines if the user is a PERSON or a HOTEL
+    @ColumnInfo(name = "user_type") // a PERSON or a HOTEL
     public UserType userType;
 
     public User(String email, String passwordHash, UserType userType) {

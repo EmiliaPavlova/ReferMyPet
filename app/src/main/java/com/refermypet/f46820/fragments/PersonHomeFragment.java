@@ -7,6 +7,7 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.RatingBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,12 +26,8 @@ public class PersonHomeFragment extends Fragment {
 
     private UserViewModel userViewModel;
     private TextView tvWelcome;
-
-    // Reservations (List instead of single view)
     private TextView tvNoReservations;
     private View layoutUpcomingBooking;
-
-    // Referrals (Single view - latest)
     private TextView tvNoReferrals;
     private LinearLayout layoutLatestReferral;
     private RatingBar ratingBar;
@@ -77,7 +74,7 @@ public class PersonHomeFragment extends Fragment {
                 TextView tvHotelName = layoutUpcomingBooking.findViewById(R.id.tv_name);
                 TextView tvBookingDates = layoutUpcomingBooking.findViewById(R.id.tv_booking_dates);
                 TextView tvPets = layoutUpcomingBooking.findViewById(R.id.tv_selected_pets);
-                View ivDelete = layoutUpcomingBooking.findViewById(R.id.iv_delete_booking);
+                View btnDelete = layoutUpcomingBooking.findViewById(R.id.iv_delete_booking);
 
                 if (latest.hotel != null) {
                     tvHotelName.setText(latest.hotel.getName());
@@ -100,13 +97,12 @@ public class PersonHomeFragment extends Fragment {
                     }
                 }
 
-                View btnDelete = layoutUpcomingBooking.findViewById(R.id.iv_delete_booking);
                 if (btnDelete != null) {
                     btnDelete.setOnClickListener(v -> {
                         userViewModel.deleteBooking(latest.booking);
                         userViewModel.loadAllBookings(userViewModel.getCurrentUserId());
 
-//                        Toast.makeText(getContext(), R.string.booking_deleted, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getContext(), R.string.booking_deleted, Toast.LENGTH_SHORT).show();
                     });
                 }
 

@@ -50,7 +50,7 @@ public class Hotel {
     @ColumnInfo(name = "description")
     public String description;
 
-    public Hotel(int userId, String name, String chain, String country, String city, String postalCode, String streetAddress, String phonePrimary, String phoneSecondary, String description) {
+    public Hotel(int userId, @NonNull String name, String chain, String country, String city, String postalCode, String streetAddress, String phonePrimary, String phoneSecondary, String description) {
         this.userId = userId;
         this.name = name;
         this.chain = chain;
@@ -71,12 +71,9 @@ public class Hotel {
         return userId;
     }
 
+    @NonNull
     public String getName() {
         return name;
-    }
-
-    public String getChain() {
-        return chain;
     }
 
     public String getCountry() {
@@ -85,25 +82,5 @@ public class Hotel {
 
     public String getCity() {
         return city;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    public String getStreetAddress() {
-        return streetAddress;
-    }
-
-    public String getPhonePrimary() {
-        return phonePrimary;
-    }
-
-    public String getPhoneSecondary() {
-        return phoneSecondary;
-    }
-
-    public String getDescription() {
-        return description;
     }
 }

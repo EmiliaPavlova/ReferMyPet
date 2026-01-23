@@ -20,7 +20,7 @@ public class Pet {
     @ColumnInfo(name = "pet_id")
     public int id;
 
-    @ColumnInfo(name = "owner_fk_id", index = true) // FK към RegularUsers таблицата
+    @ColumnInfo(name = "owner_fk_id", index = true)
     public int ownerId;
 
     @ColumnInfo(name = "name")
@@ -55,24 +55,8 @@ public class Pet {
         this.rating = rating;
     }
 
-    public PetType getType() {
-        return type;
-    }
-
-    public int getOwnerId() {
-        return ownerId;
-    }
-
     public String getName() {
         return name;
-    }
-
-    public String getBirthDate() {
-        return birthDate;
-    }
-
-    public String getChipNumber() {
-        return chipNumber;
     }
 
     public float getRating() {

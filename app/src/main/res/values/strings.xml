@@ -1,8 +1,5 @@
 <resources>
     <string name="app_name">Refer My Pet</string>
-    <string name="home_title">Refer My Pet</string>
-    <string name="splash_screen_background">Splash screen background</string>
-    <string name="splash_screen_background_landscape">Splash screen background landscape</string>
     <string name="please_login">Please login</string>
     <string name="welcome">Welcome to Refer My Pet</string>
     <string name="email">Email</string>
@@ -10,6 +7,8 @@
     <string name="password">Password</string>
     <string name="password_req">Password *</string>
     <string name="confirm_password">Confirm Password</string>
+    <string name="error_empty_credentials">Please enter email and password.</string>
+    <string name="not_valid">Email or password not valid.</string>
     <string name="submit">Submit</string>
     <string name="refer_my_pet_logo">Refer My Pet Logo</string>
     <string name="no_account">"No account? "</string>
@@ -30,12 +29,9 @@
     <string name="last_name">Last Name *</string>
     <string name="birth_date">Birth Date *</string>
     <string name="phone">Phone</string>
+    <string name="guest">Guest</string>
     <string name="logout">Logout</string>
 
-    <string-array name="user_types">
-        <item>Hotel</item>
-        <item>Pet Owner</item>
-    </string-array>
     <string name="current_rating">Current Rating:</string>
     <string name="welcome_name">Welcome, %s!</string>
     <string name="upcoming_reservation">Upcoming Reservations</string>
@@ -62,7 +58,6 @@
     <string name="search_hotel">Search Hotel</string>
     <string name="searching_hotel_data">Searching for hotel data…</string>
     <string name="add_review">Add Review</string>
-    <string name="view_review">View Review</string>
     <string name="save_review">Save Review</string>
     <string name="review_title_add">Add Review</string>
     <string name="review_title_view">Review</string>
@@ -79,7 +74,11 @@
     <string name="change_password">Change Password</string>
     <string name="old_password">Old Password</string>
     <string name="new_password">New Password</string>
+    <string name="fill_all_fields">Please fill all password fields</string>
     <string name="passwords_do_not_match">Passwords do not match</string>
+    <string name="valid_credentials_required">Valid email and password (min 5 chars) required!</string>
+    <string name="email_exists">Email already exists!</string>
+    <string name="registration_successful">Registration Successful!</string>
     <string name="profile_updated_successfully">Profile updated successfully</string>
     <string name="my_pets">My Pets</string>
     <string name="add_pet">Add Pet</string>
@@ -101,8 +100,6 @@
     <string name="none">None</string>
 
     <string name="notification_title">Active Reservation</string>
+    <string name="booking_deleted">Booking deleted</string>
     <string name="notification_content">You have an active booking! Don\'t forget to ask for a review.</string>
-    <string name="action_stop">Stop</string>
-    <string name="action_snooze">Snooze</string>
-    <string name="notifications_disabled">Please enable notifications in settings</string>
 </resources>

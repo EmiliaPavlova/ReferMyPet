@@ -49,7 +49,7 @@ public class Person {
     @ColumnInfo(name = "profile_photo_path")
     public String profilePhotoPath;
 
-    public Person(int userId, String firstName, String lastName, String birthDate, String country, String city, String streetAddress, String phone, String profilePhotoPath) {
+    public Person(int userId, @NonNull String firstName, @NonNull String lastName, @NonNull String birthDate, String country, String city, String streetAddress, String phone, String profilePhotoPath) {
         this.userId = userId;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -57,7 +57,8 @@ public class Person {
         this.country = country;
         this.city = city;
         this.streetAddress = streetAddress;
-        this.phone = phone;this.profilePhotoPath = profilePhotoPath;
+        this.phone = phone;
+        this.profilePhotoPath = profilePhotoPath;
     }
 
     public int getId() {
@@ -68,16 +69,14 @@ public class Person {
         return userId;
     }
 
+    @NonNull
     public String getFirstName() {
         return firstName;
     }
 
+    @NonNull
     public String getLastName() {
         return lastName;
-    }
-
-    public String getBirthDate() {
-        return birthDate;
     }
 
     public String getCountry() {
@@ -86,10 +85,6 @@ public class Person {
 
     public String getCity() {
         return city;
-    }
-
-    public String getStreetAddress() {
-        return streetAddress;
     }
 
     public String getPhone() {

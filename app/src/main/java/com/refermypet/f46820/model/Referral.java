@@ -50,16 +50,8 @@ public class Referral {
         return id;
     }
 
-    public int getBookingId() {
-        return bookingId;
-    }
-
     public int getPetId() {
         return petId;
-    }
-
-    public int getHotelId() {
-        return hotelId;
     }
 
     public float getRatingScore() {
@@ -68,9 +60,5 @@ public class Referral {
 
     public String getRecommendationText() {
         return recommendationText;
-    }
-
-    public String getDateOfStay() {
-        return dateOfStay;
     }
 }

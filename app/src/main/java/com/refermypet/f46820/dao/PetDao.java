@@ -11,9 +11,6 @@ public interface PetDao {
     @Insert
     long insert(Pet pet);
 
-    @Query("SELECT COUNT(pet_id) FROM pets WHERE owner_fk_id = :ownerId")
-    int countPetsByOwner(int ownerId);
-
     @Query("SELECT * FROM pets WHERE owner_fk_id = :ownerId")
     List<Pet> getPetsByOwnerId(int ownerId);
 

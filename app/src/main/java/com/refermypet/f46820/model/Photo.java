@@ -24,25 +24,7 @@ public class Photo {
     @ColumnInfo(name = "image_path")
     public String imagePath;
 
-    public Photo(Integer hotelId, Integer petId, String imagePath) { // ТРИ АРГУМЕНТА
-        this.hotelId = hotelId;
-        this.petId = petId;
-        this.imagePath = imagePath;
-    }
-
     public int getId() {
         return id;
-    }
-
-    public Integer getHotelId() {
-        return hotelId;
-    }
-
-    public Integer getPetId() {
-        return petId;
-    }
-
-    public String getImagePath() {
-        return imagePath;
     }
 }
