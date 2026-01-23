@@ -53,9 +53,28 @@ public class PersonProfileFragment extends Fragment {
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
         setupListeners(inflater);
-        observeUserData(inflater);
+        observeUserData(inflater, savedInstanceState);
+
+        if (savedInstanceState != null) {
+            passwordChangeLayout.setVisibility(savedInstanceState.getInt("pass_vis", View.GONE));
+            ArrayList<Pet> savedPets = (ArrayList<Pet>) savedInstanceState.getSerializable("temp_pets");
+            if (savedPets != null) {
+                loadUserPets(savedPets, inflater);
+            }
+        }
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("pass_vis", passwordChangeLayout.getVisibility());
+        ArrayList<Pet> currentPets = new ArrayList<>();
+        for (int i = 0; i < petsContainer.getChildCount(); i++) {
+            currentPets.add(getPetFromView(petsContainer.getChildAt(i)));
+        }
+        outState.putSerializable("temp_pets", currentPets);
     }
 
     private void initializeViews(View view) {
@@ -78,12 +97,12 @@ public class PersonProfileFragment extends Fragment {
         btnSaveProfile = view.findViewById(R.id.btn_save_person_profile);
     }
 
-    private void observeUserData(LayoutInflater inflater) {
+    private void observeUserData(LayoutInflater inflater, @Nullable Bundle savedInstanceState) {
         int userId = userViewModel.getCurrentUserId();
         userViewModel.loadUserProfile(userId);
 
         userViewModel.getCurrentPerson().observe(getViewLifecycleOwner(), person -> {
-            if (person != null) {
+            if (person != null && savedInstanceState == null) {
                 etFirstName.setText(person.firstName);
                 etLastName.setText(person.lastName);
                 etBirthDate.setText(person.birthDate);
@@ -95,7 +114,7 @@ public class PersonProfileFragment extends Fragment {
         });
 
         userViewModel.getUserPets().observe(getViewLifecycleOwner(), pets -> {
-            if (pets != null) {
+            if (pets != null && savedInstanceState == null) {
                 loadUserPets(pets, inflater);
             }
         });
@@ -172,6 +191,17 @@ public class PersonProfileFragment extends Fragment {
         petCount++;
     }
 
+    private Pet getPetFromView(View petView) {
+        String name = ((EditText) petView.findViewById(R.id.et_pet_name)).getText().toString().trim();
+        String breed = ((EditText) petView.findViewById(R.id.et_pet_breed)).getText().toString().trim();
+        String birth = ((EditText) petView.findViewById(R.id.et_pet_birth_date)).getText().toString().trim();
+        String chip = ((EditText) petView.findViewById(R.id.et_pet_chip)).getText().toString().trim();
+        PetType type = (PetType) ((Spinner) petView.findViewById(R.id.spinner_pet_type)).getSelectedItem();
+        Pet pet = new Pet(0, name, breed, type, birth, chip, "", 0.0f);
+        if (petView.getTag() != null) pet.id = (int) petView.getTag();
+        return pet;
+    }
+
     /**
      * Logic for gathering data from all fields and updating the local database.
      * After successful update, it navigates back to the previous screen.
@@ -211,23 +241,11 @@ public class PersonProfileFragment extends Fragment {
         // Update pets
         List<Pet> updatedPets = new ArrayList<>();
         for (int i = 0; i < petsContainer.getChildCount(); i++) {
-            View petView = petsContainer.getChildAt(i);
-
-            EditText petNameField = petView.findViewById(R.id.et_pet_name);
-            String name = petNameField.getText() != null ? petNameField.getText().toString().trim() : "";
-
-            if (name.isEmpty()) continue;
-
-            String breed = ((EditText) petView.findViewById(R.id.et_pet_breed)).getText().toString().trim();
-            String birth = ((EditText) petView.findViewById(R.id.et_pet_birth_date)).getText().toString().trim();
-            String chip = ((EditText) petView.findViewById(R.id.et_pet_chip)).getText().toString().trim();
-            PetType type = (PetType) ((Spinner) petView.findViewById(R.id.spinner_pet_type)).getSelectedItem();
-
-            Pet pet = new Pet(person.id, name, breed, type, birth, chip, "", 0.0f);
-            if (petView.getTag() != null) {
-                pet.id = (int) petView.getTag();
+            Pet pet = getPetFromView(petsContainer.getChildAt(i));
+            if (!pet.name.isEmpty()) {
+                pet.ownerId = person.id;
+                updatedPets.add(pet);
             }
-            updatedPets.add(pet);
         }
 
         // Persist changes via ViewModel

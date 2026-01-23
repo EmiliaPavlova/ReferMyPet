@@ -77,13 +77,13 @@ public class BookingDetailFragment extends Fragment {
                         RatingBar rbDetailReview = view.findViewById(R.id.rb_detail_review_stars);
 
                         if (item.referrals != null && !item.referrals.isEmpty()) {
-                            Referral firstRef = item.referrals.get(0); // Вземаме първия запис
+                            Referral firstRef = item.referrals.get(0);
 
                             tvReview.setText(getString(R.string.detail_review_label, firstRef.recommendationText));
 
                             if (rbDetailReview != null) {
                                 rbDetailReview.setVisibility(View.VISIBLE);
-                                rbDetailReview.setRating(firstRef.ratingScore); // Вече е ratingScore
+                                rbDetailReview.setRating(firstRef.ratingScore);
                             }
                         } else {
                             tvReview.setText(getString(R.string.no_review_given));

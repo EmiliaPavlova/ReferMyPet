@@ -113,7 +113,16 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
         }
 
         // Setup Click Listeners
-        holder.ivDelete.setOnClickListener(v -> viewModel.deleteBooking(item.booking));
+        holder.ivDelete.setOnClickListener(v -> {
+            int currentPos = holder.getBindingAdapterPosition();
+            if (currentPos != RecyclerView.NO_POSITION) {
+                BookingWithHotel itemToDelete = bookings.get(currentPos);
+                viewModel.deleteBooking(itemToDelete.booking);
+                bookings.remove(currentPos);
+                notifyItemRemoved(currentPos);
+                notifyItemRangeChanged(currentPos, bookings.size());
+            }
+        });
 
         // Click on the Review link -> Open Review Screen
         holder.tvAddReview.setOnClickListener(v -> {

@@ -68,7 +68,7 @@ public class HotelHomeFragment extends Fragment {
 
             @Override
             public void onReviewClick(BookingWithHotel item) {
-                // This handles clicking on "Add Review" - Open Review screen
+                // Handles clicking on "Add Review" - Open Review screen
                 if (item != null && item.booking != null) {
                     showReviewDialog(item);
                 }

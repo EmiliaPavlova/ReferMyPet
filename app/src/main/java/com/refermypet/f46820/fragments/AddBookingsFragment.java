@@ -1,9 +1,5 @@
 package com.refermypet.f46820.fragments;
 
-import android.Manifest;
-import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,18 +10,16 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.activity.result.ActivityResultLauncher;
-import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.core.content.ContextCompat;
 import androidx.core.util.Pair;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.android.material.datepicker.CalendarConstraints;
+import com.google.android.material.datepicker.DateValidatorPointForward;
 import com.google.android.material.datepicker.MaterialDatePicker;
-import com.refermypet.f46820.BookingReminderService;
 import com.refermypet.f46820.R;
 import com.refermypet.f46820.model.Hotel;
 import com.refermypet.f46820.model.Pet;
@@ -37,7 +31,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
-public class AddBookingFragment extends Fragment {
+public class AddBookingsFragment extends Fragment {
 
     private UserViewModel userViewModel;
     private Spinner spinnerHotels;
@@ -46,7 +40,7 @@ public class AddBookingFragment extends Fragment {
     private List<Pet> personPets = new ArrayList<>();
     private List<Pet> selectedPets = new ArrayList<>();
     private TextView tvSelectedPets;
-
+    private int savedHotelIndex = -1;
     private String startDate = "";
     private String endDate = "";
 
@@ -69,6 +63,20 @@ public class AddBookingFragment extends Fragment {
         Button btnSelectDates = view.findViewById(R.id.btn_select_dates);
         Button btnSelectPets = view.findViewById(R.id.btn_select_pets);
         Button btnConfirm = view.findViewById(R.id.btn_confirm_booking);
+
+        if (savedInstanceState != null) {
+            startDate = savedInstanceState.getString("start_date", "");
+            endDate = savedInstanceState.getString("end_date", "");
+            ArrayList<Pet> tempSelected = (ArrayList<Pet>) savedInstanceState.getSerializable("selected_pets");
+            if (tempSelected != null) {
+                selectedPets = tempSelected;
+                updateSelectedPetsText();
+            }
+            if (!startDate.isEmpty() && !endDate.isEmpty()) {
+                tvSelectedDates.setText(getString(R.string.selected_dates_format, startDate, endDate));
+            }
+            savedHotelIndex = savedInstanceState.getInt("selected_hotel_index", -1);
+        }
 
         setupHotelSpinner();
 
@@ -95,6 +103,15 @@ public class AddBookingFragment extends Fragment {
         });
     }
 
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("start_date", startDate);
+        outState.putString("end_date", endDate);
+        outState.putSerializable("selected_pets", new ArrayList<>(selectedPets));
+        outState.putInt("selected_hotel_index", spinnerHotels.getSelectedItemPosition());
+    }
+
     private void showPetSelectionDialog() {
         if (personPets.isEmpty()) {
             Toast.makeText(getContext(), R.string.no_pets_found, Toast.LENGTH_SHORT).show();
@@ -106,30 +123,49 @@ public class AddBookingFragment extends Fragment {
 
         for (int i = 0; i < personPets.size(); i++) {
             petNames[i] = personPets.get(i).name;
-            checkedItems[i] = selectedPets.contains(personPets.get(i));
+            checkedItems[i] = isPetSelected(personPets.get(i));
         }
 
         new AlertDialog.Builder(requireContext())
                 .setTitle(R.string.select_pets)
                 .setMultiChoiceItems(petNames, checkedItems, (dialog, which, isChecked) -> {
+                    Pet currentPet = personPets.get(which);
                     if (isChecked) {
-                        if (!selectedPets.contains(personPets.get(which))) {
-                            selectedPets.add(personPets.get(which));
+                        if (!isPetSelected(currentPet)) {
+                            selectedPets.add(currentPet);
                         }
                     } else {
-                        selectedPets.remove(personPets.get(which));
+                        removePetFromSelected(currentPet);
                     }
                 })
-                .setPositiveButton(R.string.ok, (dialog, which) -> {
-                    StringBuilder sb = new StringBuilder();
-                    for (int i = 0; i < selectedPets.size(); i++) {
-                        sb.append(selectedPets.get(i).name);
-                        if (i < selectedPets.size() - 1) sb.append(", ");
-                    }
-                    tvSelectedPets.setText(sb.toString());
-                })
+                .setPositiveButton(R.string.ok, (dialog, which) -> updateSelectedPetsText())
                 .setNegativeButton(R.string.cancel, null)
                 .show();
+    }
+
+    private boolean isPetSelected(Pet pet) {
+        for (Pet p : selectedPets) {
+            if (p.id == pet.id) return true;
+        }
+        return false;
+    }
+
+    private void removePetFromSelected(Pet pet) {
+        for (int i = 0; i < selectedPets.size(); i++) {
+            if (selectedPets.get(i).id == pet.id) {
+                selectedPets.remove(i);
+                break;
+            }
+        }
+    }
+
+    private void updateSelectedPetsText() {
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < selectedPets.size(); i++) {
+            sb.append(selectedPets.get(i).name);
+            if (i < selectedPets.size() - 1) sb.append(", ");
+        }
+        tvSelectedPets.setText(sb.toString());
     }
 
     private void setupHotelSpinner() {
@@ -149,13 +185,22 @@ public class AddBookingFragment extends Fragment {
                 );
                 adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spinnerHotels.setAdapter(adapter);
+
+                if (savedHotelIndex != -1) {
+                    spinnerHotels.setSelection(savedHotelIndex);
+                }
             }
         });
     }
 
     private void showDatePicker() {
+        // Only from current day on
+        CalendarConstraints.Builder constraintsBuilder = new CalendarConstraints.Builder();
+        constraintsBuilder.setValidator(DateValidatorPointForward.now());
+
         MaterialDatePicker<Pair<Long, Long>> picker = MaterialDatePicker.Builder.dateRangePicker()
                 .setTitleText(getString(R.string.title_select_period))
+                .setCalendarConstraints(constraintsBuilder.build())
                 .build();
 
         picker.show(getParentFragmentManager(), "DATE_RANGE_PICKER");
@@ -177,7 +222,7 @@ public class AddBookingFragment extends Fragment {
         Hotel selectedHotel = hotelList.get(selectedIndex);
         int personId = userViewModel.getCurrentPersonId();
 
-        userViewModel.addBooking(personId, selectedHotel.getId(), startDate, endDate, selectedPets);
+        userViewModel.addBooking(personId, selectedHotel.getId(), startDate, endDate, new ArrayList<>(selectedPets));
 
         String successMsg = getString(R.string.booking_success, selectedHotel.getName());
         Toast.makeText(getContext(), successMsg, Toast.LENGTH_SHORT).show();

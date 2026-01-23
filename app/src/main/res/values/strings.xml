@@ -97,6 +97,7 @@
     <string name="pet_birth_date_label">Birth date: %1$s</string>
     <string name="pet_chip_label">Chip: %1$s</string>
     <string name="pets">Pets:</string>
+    <string name="pets_none">Pets: None</string>
     <string name="none">None</string>
 
     <string name="notification_title">Active Reservation</string>

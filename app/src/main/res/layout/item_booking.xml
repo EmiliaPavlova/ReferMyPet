@@ -78,7 +78,9 @@
             android:padding="4dp"
             android:src="@android:drawable/ic_menu_delete"
             app:tint="@color/brown"
-            android:contentDescription="@string/delete" />
+            android:contentDescription="@string/delete"
+            android:clickable="true"
+            android:focusable="true" />
 
     </RelativeLayout>
 

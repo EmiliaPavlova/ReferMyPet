@@ -43,9 +43,21 @@ public class HotelProfileFragment extends Fragment {
         userViewModel = new ViewModelProvider(requireActivity()).get(UserViewModel.class);
 
         setupListeners();
-        observeHotelData();
+        observeHotelData(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            passwordChangeLayout.setVisibility(savedInstanceState.getInt("h_pass_vis", View.GONE));
+        }
 
         return view;
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (passwordChangeLayout != null) {
+            outState.putInt("h_pass_vis", passwordChangeLayout.getVisibility());
+        }
     }
 
     /**
@@ -75,12 +87,6 @@ public class HotelProfileFragment extends Fragment {
         etPhoneS = view.findViewById(R.id.et_h_phone_s);
         etDesc = view.findViewById(R.id.et_h_desc);
 
-        tvChangePasswordLink = view.findViewById(R.id.tv_h_change_password_link);
-        passwordChangeLayout = view.findViewById(R.id.layout_h_password_change);
-        etOldPass = view.findViewById(R.id.et_h_old_pass);
-        etNewPass = view.findViewById(R.id.et_h_new_pass);
-        etConfirmPass = view.findViewById(R.id.et_h_confirm_pass);
-
         // Password change section
         tvChangePasswordLink = view.findViewById(R.id.tv_h_change_password_link);
         passwordChangeLayout = view.findViewById(R.id.layout_h_password_change);
@@ -94,12 +100,12 @@ public class HotelProfileFragment extends Fragment {
     /**
      * Observe the Hotel object from ViewModel and populate the UI fields.
      */
-    private void observeHotelData() {
+    private void observeHotelData(@Nullable Bundle savedInstanceState) {
         int userId = userViewModel.getCurrentUserId();
         userViewModel.loadUserProfile(userId);
 
         userViewModel.getCurrentHotel().observe(getViewLifecycleOwner(), hotel -> {
-            if (hotel != null) {
+            if (hotel != null && savedInstanceState == null) {
                 etName.setText(hotel.name);
                 etChain.setText(hotel.chain);
                 etCountry.setText(hotel.country);

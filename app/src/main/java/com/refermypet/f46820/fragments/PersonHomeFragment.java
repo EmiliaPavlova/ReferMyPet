@@ -76,12 +76,39 @@ public class PersonHomeFragment extends Fragment {
 
                 TextView tvHotelName = layoutUpcomingBooking.findViewById(R.id.tv_name);
                 TextView tvBookingDates = layoutUpcomingBooking.findViewById(R.id.tv_booking_dates);
+                TextView tvPets = layoutUpcomingBooking.findViewById(R.id.tv_selected_pets);
+                View ivDelete = layoutUpcomingBooking.findViewById(R.id.iv_delete_booking);
 
                 if (latest.hotel != null) {
                     tvHotelName.setText(latest.hotel.getName());
+                    TextView tvCity = layoutUpcomingBooking.findViewById(R.id.tv_hotel_city);
+                    if (tvCity != null) tvCity.setText(latest.hotel.getCity());
                 }
                 String dateRange = latest.booking.startDate + " - " + latest.booking.endDate;
                 tvBookingDates.setText(dateRange);
+
+                if (tvPets != null) {
+                    if (latest.booking.selectedPets != null && !latest.booking.selectedPets.isEmpty()) {
+                        StringBuilder sb = new StringBuilder(getString(R.string.pets)).append(" ");
+                        for (int i = 0; i < latest.booking.selectedPets.size(); i++) {
+                            sb.append(latest.booking.selectedPets.get(i).name);
+                            if (i < latest.booking.selectedPets.size() - 1) sb.append(", ");
+                        }
+                        tvPets.setText(sb.toString());
+                    } else {
+                        tvPets.setText(getString(R.string.pets_none));
+                    }
+                }
+
+                View btnDelete = layoutUpcomingBooking.findViewById(R.id.iv_delete_booking);
+                if (btnDelete != null) {
+                    btnDelete.setOnClickListener(v -> {
+                        userViewModel.deleteBooking(latest.booking);
+                        userViewModel.loadAllBookings(userViewModel.getCurrentUserId());
+
+//                        Toast.makeText(getContext(), R.string.booking_deleted, Toast.LENGTH_SHORT).show();
+                    });
+                }
 
                 layoutUpcomingBooking.setOnClickListener(v -> navigateToDetails(latest.booking.id));
 
@@ -144,7 +171,7 @@ public class PersonHomeFragment extends Fragment {
         if (addReservationLink != null) {
             addReservationLink.setOnClickListener(v -> {
                 getParentFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_container, new AddBookingFragment())
+                        .replace(R.id.fragment_container, new AddBookingsFragment())
                         .addToBackStack(null)
                         .commit();
             });

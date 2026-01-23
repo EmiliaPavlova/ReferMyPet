@@ -101,9 +101,6 @@ public class AllBookingsFragment extends Fragment {
 
             @Override
             public void onReviewClick(BookingWithHotel item) {
-                // Person view doesn't usually add reviews here,
-                // but we must implement the method because it's in the interface.
-                // You can leave it empty or call onItemClick(item) to show details.
             }
         });
     }

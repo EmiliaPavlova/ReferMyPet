@@ -25,6 +25,8 @@ import com.refermypet.f46820.model.Person;
 import com.refermypet.f46820.model.User;
 import com.refermypet.f46820.utils.PasswordHasher;
 
+import org.jspecify.annotations.NonNull;
+
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -241,13 +243,7 @@ public class RegistrationActivity extends AppCompatActivity {
         spinnerUserType.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                if (position == 0) {
-                    includePerson.setVisibility(View.VISIBLE);
-                    includeHotel.setVisibility(View.GONE);
-                } else {
-                    includePerson.setVisibility(View.GONE);
-                    includeHotel.setVisibility(View.VISIBLE);
-                }
+                updateVisibility(position);
             }
             @Override
             public void onNothingSelected(AdapterView<?> parent) {}
@@ -330,6 +326,31 @@ public class RegistrationActivity extends AppCompatActivity {
             Toast.makeText(this, "Registration Successful!", Toast.LENGTH_SHORT).show();
             finish();
         });
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putInt("user_type_pos", spinnerUserType.getSelectedItemPosition());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        int savedPos = savedInstanceState.getInt("user_type_pos", 0);
+        spinnerUserType.setSelection(savedPos);
+
+        updateVisibility(savedPos);
+    }
+
+    private void updateVisibility(int position) {
+        if (position == 0) {
+            includePerson.setVisibility(View.VISIBLE);
+            includeHotel.setVisibility(View.GONE);
+        } else {
+            includePerson.setVisibility(View.GONE);
+            includeHotel.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override

@@ -109,6 +109,21 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putString("saved_email", etEmail.getText().toString());
+        outState.putString("saved_password", etPassword.getText().toString());
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        etEmail.setText(savedInstanceState.getString("saved_email"));
+        etPassword.setText(savedInstanceState.getString("saved_password"));
+    }
+
+    @Override
     protected void onDestroy() {
         super.onDestroy();
         // Shut down the background worker when activity is destroyed
