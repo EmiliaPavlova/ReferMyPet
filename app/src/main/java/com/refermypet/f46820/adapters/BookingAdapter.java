@@ -149,6 +149,10 @@ public class BookingAdapter extends RecyclerView.Adapter<BookingAdapter.BookingV
         notifyDataSetChanged();
     }
 
+    public List<BookingWithHotel> getBookings() {
+        return this.bookings;
+    }
+
     static class BookingViewHolder extends RecyclerView.ViewHolder {
         TextView tvHotelName, tvHotelCity, tvBookingDates, tvPets, tvAddReview;
         ImageView ivDelete;

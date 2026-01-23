@@ -70,7 +70,8 @@ public class HotelHomeFragment extends Fragment {
             public void onReviewClick(BookingWithHotel item) {
                 // Handles clicking on "Add Review" - Open Review screen
                 if (item != null && item.booking != null) {
-                    showReviewDialog(item);
+                    ReviewDialogFragment dialog = ReviewDialogFragment.newInstance(item.booking.id);
+                    dialog.show(getChildFragmentManager(), "review_dialog");
                 }
             }
         });
@@ -116,49 +117,5 @@ public class HotelHomeFragment extends Fragment {
                 upcomingAdapter.setBookings(list);
             }
         });
-    }
-
-    /**
-     * Shows the review dialog where the hotel can rate the guest and their pets.
-     */
-    private void showReviewDialog(BookingWithHotel item) {
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(getContext());
-        LayoutInflater inflater = getLayoutInflater();
-        View dialogView = inflater.inflate(R.layout.dialog_review, null);
-        builder.setView(dialogView);
-
-        android.app.AlertDialog dialog = builder.create();
-
-        TextView tvTitle = dialogView.findViewById(R.id.tv_review_title);
-        RatingBar ratingBar = dialogView.findViewById(R.id.rb_review_rating);
-        EditText etComment = dialogView.findViewById(R.id.et_review_comment);
-        Button btnSave = dialogView.findViewById(R.id.btn_save_review);
-        ImageButton btnClose = dialogView.findViewById(R.id.btn_close_dialog);
-
-        // pets names
-        StringBuilder petsName = new StringBuilder();
-        List<Pet> pets = item.getPets();
-        if (pets != null && !pets.isEmpty()) {
-            for (int i = 0; i < pets.size(); i++) {
-                petsName.append(pets.get(i).name);
-                if (i < pets.size() - 1) petsName.append(", ");
-            }
-        }
-
-        String personName = (item.person != null) ? item.person.getFirstName() : "Guest";
-
-        String formattedTitle = getString(R.string.rate_guest_and_pets, personName, petsName.toString());
-        tvTitle.setText(formattedTitle);
-
-        btnSave.setOnClickListener(v -> {
-            float rating = ratingBar.getRating();
-            String comment = etComment.getText().toString();
-            userViewModel.addReview(item, rating, comment);
-            dialog.dismiss();
-        });
-
-        btnClose.setOnClickListener(v -> dialog.dismiss());
-
-        dialog.show();
     }
 }
