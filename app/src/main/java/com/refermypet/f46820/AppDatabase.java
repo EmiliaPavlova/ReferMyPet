@@ -11,14 +11,12 @@ import com.refermypet.f46820.dao.UserDao;
 import com.refermypet.f46820.dao.HotelDao;
 import com.refermypet.f46820.dao.PersonDao;
 import com.refermypet.f46820.dao.PetDao;
-import com.refermypet.f46820.dao.PhotoDao;
 import com.refermypet.f46820.dao.ReferralDao;
 import com.refermypet.f46820.model.Booking;
 import com.refermypet.f46820.model.User;
 import com.refermypet.f46820.model.Hotel;
 import com.refermypet.f46820.model.Person;
 import com.refermypet.f46820.model.Pet;
-import com.refermypet.f46820.model.Photo;
 import com.refermypet.f46820.model.Referral;
 import com.refermypet.f46820.utils.Converters;
 
@@ -31,7 +29,6 @@ import com.refermypet.f46820.utils.Converters;
         Hotel.class,
         Person.class,
         Pet.class,
-        Photo.class,
         Referral.class,
         Booking.class
 },
