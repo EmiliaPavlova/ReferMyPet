@@ -1,12 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="splash_text">42sp</dimen>
-    <dimen name="border_padding">32dp</dimen>
-    <dimen name="max_input_width">400dp</dimen>
 
+    <dimen name="width_profile">120dp</dimen>
+    <dimen name="max_input_width">400dp</dimen>
+    <dimen name="max_input_width_profile">600dp</dimen>
+    <dimen name="max_input_width_profile_landscape">800dp</dimen>
+
+    <dimen name="input_corner_radius">4dp</dimen>
+    <dimen name="button_corner_radius">8dp</dimen>
+
+    <dimen name="input_stroke_width">1dp</dimen>
+
+    <dimen name="zero">0dp</dimen>
+
+    <dimen name="padding_link">2dp</dimen>
     <dimen name="input_vertical_padding">12dp</dimen>
+    <dimen name="padding_profile">16dp</dimen>
+    <dimen name="padding_landscape">24dp</dimen>
+    <dimen name="outer_padding">32dp</dimen>
+
+    <dimen name="card_marginTop">2dp</dimen>
+    <dimen name="margin_label_small">4dp</dimen>
     <dimen name="field_margin_bottom">8dp</dimen>
     <dimen name="section_margin_bottom">12dp</dimen>
-    <dimen name="input_corner_radius">4dp</dimen>
-    <dimen name="input_stroke_width">1dp</dimen>
+    <dimen name="margin_label">16dp</dimen>
+    <dimen name="margin_top">20dp</dimen>
+    <dimen name="margin_big">48dp</dimen>
+
+    <dimen name="landscape_center">100dp</dimen>
+
+    <dimen name="text_size_default">16sp</dimen>
+    <dimen name="button_text_size">18sp</dimen>
+    <dimen name="text_size_subtitle">20sp</dimen>
+    <dimen name="text_size_title">24sp</dimen>
+
+    <dimen name="card_radius">10dp</dimen>
+    <dimen name="card_elevation">3dp</dimen>
+
+    <dimen name="image_size">32dp</dimen>
+    <dimen name="image_size_large">70dp</dimen>
+    <dimen name="star_size">14dp</dimen>
 </resources>

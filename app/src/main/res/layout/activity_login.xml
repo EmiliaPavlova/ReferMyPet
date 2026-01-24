@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/border_padding"
+        android:padding="@dimen/outer_padding"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:clickable="true"
@@ -23,23 +23,23 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/welcome"
-            android:textSize="24sp"
+            android:textSize="@dimen/text_size_title"
             android:textStyle="bold"
             android:textColor="@color/dark_brown"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginTop="32dp" />
+            android:layout_marginTop="@dimen/outer_padding" />
 
         <TextView
             android:id="@+id/login_prompt"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:text="@string/please_login"
-            android:textSize="16sp"
+            android:textSize="@dimen/text_size_default"
             android:textColor="@color/dark_brown"
             android:gravity="center"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_label"
             app:layout_constraintTop_toBottomOf="@id/welcome_text"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -49,7 +49,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_marginTop="48dp"
+            android:layout_marginTop="@dimen/margin_big"
             app:layout_constraintTop_toBottomOf="@id/login_prompt"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -60,7 +60,7 @@
                 style="@style/PetInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="@dimen/margin_label">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_email"
@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:passwordToggleEnabled="true"
-                android:layout_marginBottom="32dp">
+                android:layout_marginBottom="@dimen/outer_padding">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_password"
@@ -90,8 +90,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:text="@string/submit"
-                android:paddingVertical="12dp"
-                android:textSize="18sp"
+                android:paddingVertical="@dimen/input_vertical_padding"
+                android:textSize="@dimen/button_text_size"
                 android:backgroundTint="@color/pet_gold"/>
 
         </LinearLayout>

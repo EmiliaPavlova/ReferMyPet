@@ -3,23 +3,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp"
+    android:padding="@dimen/padding_profile"
     android:background="@color/white">
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="All My Reservations"
-        android:textSize="22sp"
+        android:text="@string/all_my_reservations"
+        android:textSize="@dimen/text_size_title"
         android:textStyle="bold"
         android:textColor="@color/brown"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="@dimen/margin_label" />
 
     <TextView
         android:id="@+id/tv_no_all_bookings"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="No reservations found."
+        android:text="@string/no_reservations_found"
         android:visibility="gone" />
 
     <androidx.recyclerview.widget.RecyclerView

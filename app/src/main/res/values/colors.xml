@@ -11,4 +11,5 @@
     <color name="accent_yellow">#FFC107</color>
     <color name="pet_gold">#F5B041</color>
     <color name="border_color">#66000000</color>
+    <color name="light_gray">#C0C0C0</color>
 </resources>

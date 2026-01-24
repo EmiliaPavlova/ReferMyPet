@@ -2,19 +2,20 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="24dp"
+        android:padding="@dimen/outer_padding"
         android:background="@color/white">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp">
+            android:layout_marginBottom="@dimen/margin_label">
 
             <TextView
                 android:id="@+id/tv_review_title"
@@ -24,28 +25,28 @@
                 android:layout_toStartOf="@+id/btn_close_dialog"
                 android:text="@string/review_title_add"
                 android:textColor="@color/brown"
-                android:textSize="20sp"
+                android:textSize="@dimen/text_size_subtitle"
                 android:textStyle="bold" />
 
             <ImageButton
                 android:id="@+id/btn_close_dialog"
-                android:layout_width="32dp"
-                android:layout_height="32dp"
+                android:layout_width="@dimen/outer_padding"
+                android:layout_height="@dimen/outer_padding"
                 android:layout_alignParentEnd="true"
                 android:layout_centerVertical="true"
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:src="@android:drawable/ic_menu_close_clear_cancel"
                 android:contentDescription="@string/none"
-                android:tint="@color/brown" />
+                app:tint="@color/brown" />
         </RelativeLayout>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/rating"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_size_default"
             android:textColor="@color/brown"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="@dimen/margin_label_small" />
 
         <RatingBar
             android:id="@+id/rb_review_rating"
@@ -54,16 +55,16 @@
             android:numStars="5"
             android:stepSize="1.0"
             android:progressTint="@color/brown"
-            android:layout_marginBottom="16dp"
+            android:layout_marginBottom="@dimen/margin_label"
             style="?android:attr/ratingBarStyle" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/add_review"
-            android:textSize="14sp"
+            android:textSize="@dimen/text_size_default"
             android:textColor="@color/brown"
-            android:layout_marginBottom="4dp" />
+            android:layout_marginBottom="@dimen/margin_label_small" />
 
         <EditText
             android:id="@+id/et_review_comment"
@@ -72,9 +73,9 @@
             android:minLines="3"
             android:gravity="top"
             android:inputType="textMultiLine"
-            android:padding="8dp"
+            android:padding="@dimen/field_margin_bottom"
             android:background="@android:drawable/edit_text"
-            android:layout_marginBottom="24dp" />
+            android:layout_marginBottom="@dimen/margin_top" />
 
         <Button
             android:id="@+id/btn_save_review"

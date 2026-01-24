@@ -4,20 +4,20 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginVertical="6dp"
-    app:cardCornerRadius="10dp"
-    app:cardElevation="3dp">
+    app:cardCornerRadius="@dimen/card_radius"
+    app:cardElevation="@dimen/card_elevation">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingEnd="16dp"
+        android:paddingEnd="@dimen/padding_profile"
         android:background="@color/creamy">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp"
+            android:padding="@dimen/padding_profile"
             android:background="@color/creamy">
 
             <TextView
@@ -25,7 +25,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Hotel Name"
-                android:textSize="18sp"
+                android:textSize="@dimen/text_size_subtitle"
                 android:textStyle="bold"
                 android:textColor="@color/brown" />
 
@@ -34,25 +34,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="City"
-                android:textSize="14sp"
+                android:textSize="@dimen/text_size_default"
                 android:textColor="@color/brown" />
 
             <TextView
                 android:id="@+id/tv_booking_dates"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="@dimen/field_margin_bottom"
                 android:text="01.01.2024 - 10.01.2024"
-                android:textSize="15sp"
+                android:textSize="@dimen/text_size_default"
                 android:textColor="@color/brown" />
 
             <TextView
                 android:id="@+id/tv_selected_pets"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="@dimen/field_margin_bottom"
                 android:text="Pets: None"
-                android:textSize="15sp"
+                android:textSize="@dimen/text_size_default"
                 android:textStyle="italic"
                 android:textColor="@color/brown" />
 
@@ -62,20 +62,20 @@
                 android:layout_height="wrap_content"
                 android:text="@string/add_review"
                 android:textColor="@color/pet_gold"
-                android:textSize="14sp"
+                android:textSize="@dimen/text_size_default"
                 android:textStyle="bold"
-                android:paddingTop="16dp"
+                android:paddingTop="@dimen/padding_profile"
                 android:visibility="gone" />
 
         </LinearLayout>
 
         <ImageView
             android:id="@+id/iv_delete_booking"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/image_size"
+            android:layout_height="@dimen/image_size"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:padding="4dp"
+            android:padding="@dimen/padding_link"
             android:src="@android:drawable/ic_menu_delete"
             app:tint="@color/brown"
             android:contentDescription="@string/delete"

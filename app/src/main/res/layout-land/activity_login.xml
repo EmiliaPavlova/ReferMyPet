@@ -12,7 +12,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="16dp"
+        android:layout_margin="@dimen/margin_label"
         android:focusable="true"
         android:focusableInTouchMode="true"
         android:clickable="true">
@@ -26,8 +26,8 @@
 
         <ImageView
             android:id="@+id/app_logo"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
+            android:layout_width="@dimen/landscape_center"
+            android:layout_height="@dimen/landscape_center"
             android:src="@drawable/dog_cat_light"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -37,10 +37,10 @@
 
         <TextView
             android:id="@+id/welcome_text"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:text="@string/welcome"
-            android:textSize="20sp"
+            android:textSize="@dimen/text_size_subtitle"
             android:textStyle="bold"
             android:textColor="@color/dark_brown"
             android:gravity="center"
@@ -51,20 +51,20 @@
 
         <LinearLayout
             android:id="@+id/login_form_container"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toTopOf="@+id/registration_chain"
             app:layout_constraintStart_toEndOf="@id/guideline_vertical"
             app:layout_constraintEnd_toEndOf="parent"
-            android:paddingHorizontal="24dp">
+            android:paddingHorizontal="@dimen/padding_landscape">
 
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/PetInputLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="8dp">
+                android:layout_marginBottom="@dimen/field_margin_bottom">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
@@ -78,7 +78,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:passwordToggleEnabled="true"
-                android:layout_marginBottom="16dp">
+                android:layout_marginBottom="@dimen/margin_label">
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
@@ -93,7 +93,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/submit"
                 android:backgroundTint="@color/pet_gold"
-                app:cornerRadius="8dp" />
+                app:cornerRadius="@dimen/button_corner_radius" />
         </LinearLayout>
 
         <LinearLayout
@@ -101,7 +101,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_label"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/guideline_vertical">
@@ -118,7 +118,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/register"
                 android:textColor="@color/pet_gold"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="@dimen/field_margin_bottom"
                 android:textStyle="bold"
                 android:clickable="true"
                 android:focusable="true" />

@@ -3,15 +3,15 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginVertical="8dp"
+    android:layout_marginVertical="@dimen/field_margin_bottom"
     app:cardBackgroundColor="@android:color/white"
-    app:cardCornerRadius="12dp">
+    app:cardCornerRadius="@dimen/card_radius">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="12dp">
+        android:padding="@dimen/padding_profile">
 
         <EditText
             android:id="@+id/et_pet_name"
@@ -24,9 +24,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/pet_type"
-            android:textSize="12sp"
+            android:textSize="@dimen/text_size_default"
             android:textColor="@color/brown"
-            android:layout_marginTop="4dp"/>
+            android:layout_marginTop="@dimen/margin_label_small"/>
 
         <Spinner
             android:id="@+id/spinner_pet_type"
@@ -58,8 +58,8 @@
 
         <ImageButton
             android:id="@+id/btn_remove_pet"
-            android:layout_width="32dp"
-            android:layout_height="32dp"
+            android:layout_width="@dimen/image_size"
+            android:layout_height="@dimen/image_size"
             android:layout_gravity="end"
             android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@android:drawable/ic_menu_delete"

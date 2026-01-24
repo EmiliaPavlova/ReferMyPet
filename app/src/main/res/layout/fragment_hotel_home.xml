@@ -4,14 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
-    android:padding="20dp">
+    android:padding="@dimen/padding_profile">
 
     <TextView
         android:id="@+id/tv_welcome"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/welcome_name"
-        android:textSize="26sp"
+        android:textSize="@dimen/text_size_title"
         android:textColor="@color/brown"
         android:textStyle="bold"
         app:layout_constraintTop_toTopOf="parent"
@@ -21,9 +21,9 @@
         android:id="@+id/tv_label_upcoming"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="@dimen/margin_top"
         android:text="@string/upcoming_reservation"
-        android:textSize="18sp"
+        android:textSize="@dimen/text_size_subtitle"
         android:textColor="@color/brown"
         android:textStyle="bold"
         app:layout_constraintTop_toBottomOf="@id/tv_welcome"
@@ -33,10 +33,10 @@
         android:id="@+id/tv_no_reservations"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="6dp"
+        android:layout_marginTop="@dimen/field_margin_bottom"
         android:text="@string/no_upcoming_reservations"
-        android:textSize="14sp"
-        android:textColor="#757575"
+        android:textSize="@dimen/text_size_default"
+        android:textColor="@color/dark_gray"
         android:visibility="gone"
         app:layout_constraintTop_toBottomOf="@id/tv_label_upcoming"
         app:layout_constraintStart_toStartOf="parent"
@@ -44,10 +44,10 @@
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rv_bookings"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginBottom="16dp"
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/zero"
+        android:layout_marginTop="@dimen/field_margin_bottom"
+        android:layout_marginBottom="@dimen/margin_label"
         android:scrollbars="vertical"
         android:fadeScrollbars="false"
         app:layout_constraintTop_toBottomOf="@id/tv_no_reservations"
@@ -57,10 +57,9 @@
 
     <View
         android:id="@+id/divider"
-        android:layout_width="0dp"
-        android:layout_height="1dp"
-        android:background="#E0E0E0"
-        android:layout_marginBottom="12dp"
+        android:layout_width="@dimen/zero"
+        android:layout_height="@dimen/input_stroke_width"
+        android:layout_marginBottom="@dimen/section_margin_bottom"
         app:layout_constraintBottom_toTopOf="@id/tv_past_reservations"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent" />
@@ -71,9 +70,9 @@
         android:layout_height="wrap_content"
         android:text="@string/past_reservations"
         android:textColor="@color/pet_gold"
-        android:textSize="15sp"
+        android:textSize="@dimen/text_size_default"
         android:textStyle="bold"
-        android:padding="2dp"
+        android:padding="@dimen/padding_link"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 

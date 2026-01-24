@@ -8,13 +8,13 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="24dp">
+        android:padding="@dimen/padding_profile">
 
         <TextView
             android:id="@+id/tv_detail_hotel_name"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:textSize="22sp"
+            android:textSize="@dimen/text_size_subtitle"
             android:textStyle="bold"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -22,28 +22,28 @@
 
         <TextView
             android:id="@+id/tv_detail_location"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="16sp"
+            android:layout_marginTop="@dimen/margin_label_small"
+            android:textSize="@dimen/text_size_default"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_hotel_name"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/tv_detail_date"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_label"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_location"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 
         <TextView
             android:id="@+id/tv_detail_guest_name"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/margin_label"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_date"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
@@ -52,19 +52,19 @@
             android:id="@+id/tv_label_pets"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/margin_top"
             android:text="@string/pets"
             android:textStyle="bold"
-            android:textSize="18sp"
+            android:textSize="@dimen/text_size_default"
             android:textColor="@color/brown"
             app:layout_constraintTop_toBottomOf="@id/tv_detail_guest_name"
             app:layout_constraintStart_toStartOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_booking_pets"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
+            android:layout_marginTop="@dimen/field_margin_bottom"
             android:nestedScrollingEnabled="false"
             app:layout_constraintTop_toBottomOf="@id/tv_label_pets"
             app:layout_constraintStart_toStartOf="parent"
@@ -74,7 +74,7 @@
             android:id="@+id/rb_detail_review_stars"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
+            android:layout_marginTop="@dimen/margin_top"
             android:numStars="5"
             android:stepSize="1.0"
             android:isIndicator="true"
@@ -85,10 +85,10 @@
 
         <TextView
             android:id="@+id/tv_detail_review"
-            android:layout_width="0dp"
+            android:layout_width="@dimen/zero"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:padding="12dp"
+            android:layout_marginTop="@dimen/margin_top"
+            android:padding="@dimen/input_vertical_padding"
             android:background="@color/creamy"
             android:textStyle="italic"
             app:layout_constraintTop_toBottomOf="@id/rv_booking_pets"
